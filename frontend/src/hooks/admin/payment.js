@@ -5,11 +5,9 @@ export const updatePaymentCredentials = ({ userId, email, data }) => {
   return axios.put(`${BASE_URL}/admin/paygic/set/${userId}/${email}`, data);
 };
 
-export const getDepartmentUsers = async (adminId, adminEmail) => {
+export const getDepartmentUsers = async () => {
   // TODO: confirm this matches your real endpoint/base URL pattern (same as getAllUsers)
-  return axios.get(`${BASE_URL}/admin/departments`, {
-    params: { adminId, adminEmail },
-  });
+  return axios.get(`${BASE_URL}/admin/departments`);
 };
 
 export const createDepartmentUser = async (payload) => {

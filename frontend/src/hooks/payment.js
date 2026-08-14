@@ -12,7 +12,3 @@ export const verifyRazorpayPayment = (data) => {
 export const getRazorpayKey = () => {
   return axios.get(`${BASE_URL}/rozarpay/key`);
 };
-
-export const getDepartments = () => {
-  return axios.get(`${BASE_URL}/department`);
-};

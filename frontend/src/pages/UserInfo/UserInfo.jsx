@@ -1,5 +1,4 @@
 import React, { Suspense, useEffect, useState } from "react";
-// import getDepartments from "../../hooks/departments/getDepartments"; // TODO: point at your real admin-fetch hook
 import GuestModal from "../../components/welcomeModal/WelcomeModal";
 import CallManager from "../../components/CallManager/CallManager";
 import { useSearchParams } from "react-router-dom";
@@ -18,7 +17,7 @@ import {
 } from "lucide-react";
 import { useCall } from "../../Provider/Provider";
 import { Navigate } from "react-router-dom";
-import { getDepartments } from "../../hooks/payment";
+import { getDepartmentUsers } from "../../hooks/admin/payment";
 
 const useBrandFonts = () => {
   useEffect(() => {
@@ -56,6 +55,8 @@ const UserInfo = () => {
   const [activeCall, setActiveCall] = useState(null); // department currently being called
   const [searchParams] = useSearchParams();
 
+  console.log(departments);
+
   // Back-compat: some old QR links may still carry userId/name; new links should carry propertyId
   const propertyId =
     searchParams.get("propertyId") || searchParams.get("userId");
@@ -74,7 +75,7 @@ const UserInfo = () => {
     setLoading(true);
     if (propertyId) {
       const fetch = async () => {
-        const { data } = await getDepartments({ propertyId });
+        const { data } = await getDepartmentUsers();
         if (data.success) {
           setDepartments(data.data || []);
         }

@@ -56,7 +56,7 @@ router.put(
 // department
 
 router.post("/departments", adminOnly, createDepartment);
-router.get("/departments", adminOnly, getAllDepartments);
+router.get("/departments", getAllDepartments);
 router.patch("/departments/:id", adminOnly, updateDepartment);
 router.delete("/departments/:id", adminOnly, deleteDepartment);
 
