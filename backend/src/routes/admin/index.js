@@ -1,6 +1,12 @@
 const addCredit = require("../../api/v1/admin/addCredit");
 const addWebsiteData = require("../../api/v1/admin/addWebisteData");
 const deleteUser = require("../../api/v1/admin/deleteUser");
+const {
+  createDepartment,
+  getAllDepartments,
+  updateDepartment,
+  deleteDepartment,
+} = require("../../api/v1/admin/department");
 const getAllContacts = require("../../api/v1/admin/getAllContacts");
 const getAllUsers = require("../../api/v1/admin/getAllUsers");
 const getDistributors = require("../../api/v1/admin/getDistributors");
@@ -29,7 +35,6 @@ router.put("/paygic/set/:id/:email", adminOnly, setPaygic);
 router.get("/paygic/:id/:email", adminOnly, getPaygic);
 router.put("/paygic/set/:id/:email", adminOnly, setPaygic);
 
-
 // contact
 router.get("/contacts/:id/:email", adminOnly, getAllContacts);
 
@@ -42,6 +47,17 @@ router.post("/credit/add/:userId/:userEmail", adminOnly, addCredit);
 
 // distributor routes
 router.get("/distributors/get/all", adminOnly, getDistributors);
-router.put("/distributor/update/status/:userId", adminOnly, updateDistributorStatus);
+router.put(
+  "/distributor/update/status/:userId",
+  adminOnly,
+  updateDistributorStatus,
+);
+
+// department
+
+router.post("/departments", adminOnly, createDepartment);
+router.get("/departments", adminOnly, getAllDepartments);
+router.patch("/departments/:id", adminOnly, updateDepartment);
+router.delete("/departments/:id", adminOnly, deleteDepartment);
 
 module.exports = router;

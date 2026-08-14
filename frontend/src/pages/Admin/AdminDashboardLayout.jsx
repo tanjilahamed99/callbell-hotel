@@ -21,6 +21,7 @@ import {
   Activity,
   Database,
   AlertCircle,
+  Building2,
 } from "lucide-react";
 import { useCall } from "../../Provider/Provider";
 import { useEffect, useState } from "react";
@@ -43,6 +44,7 @@ const AdminDashboardLayout = () => {
     { href: "/admin/subscriptions", label: "Subscriptions", icon: CreditCard },
     { href: "/admin/transactions", label: "Transactions", icon: History },
     { href: "/admin/settings", label: "Settings", icon: Settings },
+    { href: "/admin/departments", label: "Departments", icon: Building2 },
   ];
 
   const supportLinks = [

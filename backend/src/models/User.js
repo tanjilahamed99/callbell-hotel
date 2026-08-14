@@ -101,6 +101,18 @@ const userSchema = new mongoose.Schema({
       time: { type: Date, default: Date.now },
     },
   ],
+
+  department: {
+    type: String,
+    enum: [
+      "reception",
+      "room-service",
+      "restaurant",
+      "manager",
+      "duty-manager",
+      "staff",
+    ],
+  },
 });
 
 userSchema.pre("save", async function (next) {

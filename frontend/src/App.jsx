@@ -35,6 +35,7 @@ import PaymentFailed from "./pages/Distributor/PaymentFailed";
 import CallHistory from "./pages/Dashboard/CallHistory";
 import Contacts from "./pages/Dashboard/Contacts";
 import RazorpayCheck from "./pages/Dashboard/RazorpayPaymentValidation";
+import AdminDepartments from "./pages/Admin/AdminDepartments";
 
 function App() {
   return (
@@ -77,16 +78,9 @@ function App() {
           <Route path="privacy" element={<AdminPrivacy />} />
           <Route path="credit" element={<AdminCredit />} />
           <Route path="distributor" element={<AdminDistributor />} />
+          <Route path="departments" element={<AdminDepartments />} />
         </Route>
 
-        {/* distributor */}
-
-        {/* <Route path="/distributor" element={<DistributorDashboardLayout />}>
-          <Route index element={<DistributorDashboard />} />
-          <Route path="users" element={<DistributorAllUsers />} />
-          <Route path="success" element={<PaymentSuccess />} />
-          <Route path="failed" element={<PaymentFailed />} />
-        </Route> */}
       </Routes>
     </div>
   );
