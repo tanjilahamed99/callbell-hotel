@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+dialog {
+  z-index: 999;
+}
+
+.swal2-container {
+  z-index: 99999 !important;
+}
