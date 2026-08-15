@@ -24,7 +24,6 @@ const GuestModal = ({ setShowUser }) => {
   const [room, setRoom] = useState("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  // const [isBlocked, setIsBlocked] = useState(false);
 
   useEffect(() => {
     const storedGuest = localStorage.getItem("guest");

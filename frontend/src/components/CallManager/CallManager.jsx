@@ -11,13 +11,14 @@ export default function CallManager({
   userId,
   userName = "CallBell-user",
   isBusy,
+  setActiveCall,
 }) {
   const [waitingCall, setWaitingCall] = useState(false);
   const { user } = useCall();
   const guest = JSON.parse(localStorage.getItem("guest"));
   const guestName = guest.name;
   const gestId = guest.id;
-  const gestPhone = guest.phone;
+  const gestRoom = guest.room;
 
   const navigate = useNavigate();
 
@@ -75,9 +76,9 @@ export default function CallManager({
       to: userId,
       roomName,
       gestId,
-      gestPhone,
+      room: gestRoom,
     });
-  }, [userId, guestName]);
+  }, [userId, guestName, gestRoom]);
 
   const handleCloseCall = useCallback(() => {
     socket.emit("callCanceled", { userId });
@@ -92,7 +93,7 @@ export default function CallManager({
         📞 Call {userName}
       </button>
       <button
-        onClick={() => navigate("/")}
+        onClick={() => setActiveCall(null)}
         className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-300 w-[30%]">
         Back
       </button>

@@ -93,7 +93,7 @@ io.on("connection", (socket) => {
   // Guest calls registered user
   socket.on(
     "guest-call",
-    async ({ from, to, roomName, fcmToken, gestId, gestPhone }) => {
+    async ({ from, to, roomName, fcmToken, gestId, room }) => {
       const target = userSockets.find((entry) => entry.id === to);
       // 1. Notify via Socket (Foreground)
       if (target) {
@@ -104,7 +104,7 @@ io.on("connection", (socket) => {
             guest: true,
             socketId: socket.id,
             gestId,
-            gestPhone,
+            room,
           },
           roomName,
         });
@@ -127,6 +127,7 @@ io.on("connection", (socket) => {
         sender: String("Caller"),
         uuid: Date.now().toString(),
         avatar: "",
+        room:String(room)
       };
 
       try {

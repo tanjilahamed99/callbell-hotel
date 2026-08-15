@@ -12,14 +12,27 @@ import {
   Ban,
   CheckCircle,
 } from "lucide-react";
-import { BASE_URL } from "../../config/constant";
 import {
   blockGest,
   getUniqueContact,
   unblockGest,
 } from "../../hooks/users/updateUser";
 
+const useBrandFonts = () => {
+  useEffect(() => {
+    const id = "auth-brand-fonts";
+    if (document.getElementById(id)) return;
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.href =
+      "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap";
+    document.head.appendChild(link);
+  }, []);
+};
+
 const Contacts = () => {
+  useBrandFonts();
   const { user } = useCall();
   const [contacts, setContacts] = useState([]);
   const [blockedIds, setBlockedIds] = useState([]);
@@ -37,7 +50,6 @@ const Contacts = () => {
       if (data.success) {
         setContacts(data.contacts);
         setFiltered(data.contacts);
-        // Force everything to string to avoid ObjectId vs String mismatch
         const ids = data.contacts
           .filter((c) => c.isBlocked)
           .map((c) => String(c.gestId));
@@ -84,7 +96,9 @@ const Contacts = () => {
           : "This guest will be able to call you again.",
       icon: action === "block" ? "warning" : "question",
       showCancelButton: true,
-      confirmButtonColor: action === "block" ? "#dc2626" : "#16a34a",
+      background: "#101820",
+      color: "#f1ece2",
+      confirmButtonColor: action === "block" ? "#b8892b" : "#16a34a",
       cancelButtonColor: "#6b7280",
       confirmButtonText: action === "block" ? "Yes, Block" : "Yes, Unblock",
       cancelButtonText: "Cancel",
@@ -115,7 +129,9 @@ const Contacts = () => {
           title: action === "block" ? "Blocked!" : "Unblocked!",
           text: `${contact.gestName} has been ${action}ed successfully.`,
           icon: "success",
-          confirmButtonColor: "#dc2626",
+          background: "#101820",
+          color: "#f1ece2",
+          confirmButtonColor: "#b8892b",
           timer: 2000,
           showConfirmButton: false,
         });
@@ -125,7 +141,9 @@ const Contacts = () => {
         title: "Error",
         text: error.response?.data?.message || "Something went wrong",
         icon: "error",
-        confirmButtonColor: "#dc2626",
+        background: "#101820",
+        color: "#f1ece2",
+        confirmButtonColor: "#b8892b",
       });
     } finally {
       setActionLoading(null);
@@ -138,95 +156,96 @@ const Contacts = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="relative">
-            <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-red-600 to-red-700 animate-pulse mb-4" />
+            <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-[#b8892b] to-[#8a651c] animate-pulse mb-4" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 border-4 border-red-200 border-t-red-600 rounded-full animate-spin" />
+              <div className="w-16 h-16 border-4 border-[#b8892b]/20 border-t-[#c9a24b] rounded-full animate-spin" />
             </div>
           </div>
-          <p className="text-gray-600 mt-4 font-medium">Loading contacts...</p>
+          <p className="text-[#f1ece2]/60 mt-4 font-medium">
+            Loading contacts...
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 md:p-6 lg:p-8">
+    <div
+      className="min-h-screen p-3 sm:p-4 md:p-6 lg:p-8"
+      style={{ fontFamily: "'Inter', ui-sans-serif, sans-serif" }}>
       {/* Header */}
       <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-          Guest <span className="text-red-600">Contacts</span>
+        <h1
+          className="text-2xl sm:text-3xl lg:text-4xl text-[#f1ece2] mb-2"
+          style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontWeight: 600,
+          }}>
+          Guest <span className="text-[#c9a24b]">Contacts</span>
         </h1>
-        <p className="text-gray-500 text-sm sm:text-base">
+        <p className="text-[#f1ece2]/45 text-sm sm:text-base">
           Manage guests who have called you — block or unblock anytime
         </p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        {[
-          {
-            label: "Total Contacts",
-            value: contacts.length,
-            icon: Users,
-            color: "from-red-600 to-red-700",
-          },
-          {
-            label: "Active",
-            value: contacts.length - blockedCount,
-            icon: CheckCircle,
-            color: "from-green-600 to-green-700",
-          },
-          {
-            label: "Blocked",
-            value: blockedCount,
-            icon: Ban,
-            color: "from-gray-600 to-gray-800",
-          },
-        ].map((stat, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex items-center gap-4">
+      {/* Stats — row design */}
+      <div className="rounded-2xl border border-[#b8892b]/20 bg-gradient-to-br from-[#16222f]/90 via-[#0e161e]/90 to-[#16222f]/90 shadow-xl overflow-hidden mb-6">
+        <div className="divide-y sm:divide-y-0 sm:divide-x divide-[#b8892b]/10 sm:flex">
+          {[
+            { label: "Total Contacts", value: contacts.length, icon: Users },
+            {
+              label: "Active",
+              value: contacts.length - blockedCount,
+              icon: CheckCircle,
+            },
+            { label: "Blocked", value: blockedCount, icon: Ban },
+          ].map((stat, i) => (
             <div
-              className={`w-11 h-11 rounded-lg bg-gradient-to-r ${stat.color} flex items-center justify-center flex-shrink-0`}>
-              <stat.icon className="w-5 h-5 text-white" />
+              key={i}
+              className="flex-1 flex items-center gap-3 px-4 sm:px-6 py-4">
+              <div className="w-10 h-10 rounded-lg bg-[#b8892b]/10 border border-[#b8892b]/20 flex items-center justify-center flex-shrink-0">
+                <stat.icon className="w-5 h-5 text-[#c9a24b]" />
+              </div>
+              <div>
+                <p className="text-xs text-[#f1ece2]/45">{stat.label}</p>
+                <p className="text-xl font-bold text-[#f1ece2]">
+                  {stat.value}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-sm text-gray-500">{stat.label}</p>
-              <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Main card */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+      <div className="rounded-2xl border border-[#b8892b]/20 bg-gradient-to-br from-[#16222f]/90 via-[#0e161e]/90 to-[#16222f]/90 shadow-xl overflow-hidden">
         {/* Toolbar */}
-        <div className="p-4 sm:p-6 border-b border-gray-100">
+        <div className="p-4 sm:p-6 border-b border-[#b8892b]/15">
           <div className="flex flex-col sm:flex-row gap-3">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#f1ece2]/30" />
               <input
                 type="text"
                 placeholder="Search by name or phone..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full h-10 pl-9 pr-9 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
+                className="w-full h-10 pl-9 pr-9 bg-[#0a0f15]/60 border border-[#b8892b]/20 rounded-lg text-sm text-[#f1ece2] placeholder:text-[#f1ece2]/30 focus:outline-none focus:border-[#c9a24b] focus:ring-2 focus:ring-[#c9a24b]/20 transition"
               />
               {search && (
                 <button
                   onClick={() => setSearch("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#f1ece2]/30 hover:text-[#f1ece2]/60">
                   <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
 
             {/* Tabs */}
-            <div className="flex bg-gray-100 rounded-lg p-1 gap-1 self-start">
+            <div className="flex bg-[#0a0f15]/60 border border-[#b8892b]/15 rounded-lg p-1 gap-1 self-start">
               {[
                 { key: "all", label: "All" },
                 { key: "blocked", label: `Blocked (${blockedCount})` },
@@ -236,8 +255,8 @@ const Contacts = () => {
                   onClick={() => setTab(t.key)}
                   className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
                     tab === t.key
-                      ? "bg-white text-gray-900 shadow-sm"
-                      : "text-gray-500 hover:text-gray-700"
+                      ? "bg-gradient-to-r from-[#b8892b] to-[#8a651c] text-[#0a0f15]"
+                      : "text-[#f1ece2]/50 hover:text-[#f1ece2]/80"
                   }`}>
                   {t.label}
                 </button>
@@ -248,7 +267,7 @@ const Contacts = () => {
 
         {/* Contact list */}
         {filtered.length > 0 ? (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-[#b8892b]/10">
             {filtered.map((contact, idx) => {
               const isBlocked = blockedIds.includes(String(contact.gestId));
               const isLoading = actionLoading === String(contact.gestId);
@@ -256,7 +275,7 @@ const Contacts = () => {
               return (
                 <div
                   key={idx}
-                  className={`flex items-center justify-between px-4 sm:px-6 py-4 hover:bg-gray-50/60 transition-colors ${
+                  className={`flex items-center justify-between px-4 sm:px-6 py-4 hover:bg-[#b8892b]/5 transition-colors ${
                     isBlocked ? "opacity-60" : ""
                   }`}>
                   {/* Avatar + info */}
@@ -264,24 +283,24 @@ const Contacts = () => {
                     <div
                       className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-base ${
                         isBlocked
-                          ? "bg-gray-100 text-gray-400"
-                          : "bg-gradient-to-br from-red-100 to-orange-100 text-red-600"
+                          ? "bg-[#f1ece2]/5 text-[#f1ece2]/30"
+                          : "bg-gradient-to-br from-[#b8892b] to-[#8a651c] text-[#0a0f15]"
                       }`}>
                       {contact.gestName?.charAt(0)?.toUpperCase() || "G"}
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-sm font-semibold text-gray-900 truncate">
+                        <p className="text-sm font-semibold text-[#f1ece2] truncate">
                           {contact.gestName}
                         </p>
                         {isBlocked && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-50 text-red-600 rounded-full text-[11px] font-semibold">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#b8892b]/10 text-[#c9a24b] rounded-full text-[11px] font-semibold">
                             <Ban className="w-2.5 h-2.5" />
                             Blocked
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-1 text-xs text-gray-500 mt-0.5">
+                      <div className="flex items-center gap-1 text-xs text-[#f1ece2]/40 mt-0.5">
                         <Phone className="w-3 h-3" />
                         {contact.gestPhone}
                       </div>
@@ -294,8 +313,8 @@ const Contacts = () => {
                     disabled={isLoading}
                     className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                       isBlocked
-                        ? "bg-green-50 text-green-700 hover:bg-green-100 border border-green-200"
-                        : "bg-red-50 text-red-600 hover:bg-red-100 border border-red-200"
+                        ? "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20"
+                        : "bg-[#b8892b]/10 text-[#c9a24b] hover:bg-[#b8892b]/20 border border-[#b8892b]/20"
                     }`}>
                     {isLoading ? (
                       <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -312,17 +331,17 @@ const Contacts = () => {
           </div>
         ) : (
           <div className="text-center py-16">
-            <div className="w-16 h-16 mx-auto rounded-full bg-gray-100 flex items-center justify-center mb-4">
-              <User className="w-8 h-8 text-gray-400" />
+            <div className="w-16 h-16 mx-auto rounded-full bg-[#f1ece2]/5 flex items-center justify-center mb-4">
+              <User className="w-8 h-8 text-[#f1ece2]/25" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            <h3 className="text-lg font-semibold text-[#f1ece2] mb-1">
               {search
                 ? "No contacts found"
                 : tab === "blocked"
                   ? "No blocked contacts"
                   : "No contacts yet"}
             </h3>
-            <p className="text-sm text-gray-500 max-w-xs mx-auto">
+            <p className="text-sm text-[#f1ece2]/40 max-w-xs mx-auto">
               {search
                 ? "Try a different name or phone number"
                 : tab === "blocked"

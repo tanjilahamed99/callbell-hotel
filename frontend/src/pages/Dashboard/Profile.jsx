@@ -4,29 +4,38 @@ import { useCall } from "../../Provider/Provider";
 import updateUser from "../../hooks/users/updateUser";
 import myData from "../../hooks/users/myData";
 import QrCode from "../../components/Dashboard/QrCode";
-import { Link } from "react-router-dom";
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Camera, 
-  Edit2, 
-  Save, 
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Camera,
+  Edit2,
+  Save,
   X,
   Shield,
-  Calendar,
-  Clock,
-  CreditCard,
   QrCode as QrIcon,
   RefreshCw,
   Download,
   Share2,
   CheckCircle,
-  AlertCircle
 } from "lucide-react";
 
+const useBrandFonts = () => {
+  useEffect(() => {
+    const id = "auth-brand-fonts";
+    if (document.getElementById(id)) return;
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.href =
+      "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap";
+    document.head.appendChild(link);
+  }, []);
+};
+
 const Profile = () => {
+  useBrandFonts();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -36,12 +45,13 @@ const Profile = () => {
   const [refetch, setRefetch] = useState(false);
 
   // initials
-  const initials = myInfo?.name
-    ?.split(" ")
-    .map((n) => n[0])
-    .join("")
-    .substring(0, 2)
-    .toUpperCase() || "U";
+  const initials =
+    myInfo?.name
+      ?.split(" ")
+      .map((n) => n[0])
+      .join("")
+      .substring(0, 2)
+      .toUpperCase() || "U";
 
   // open file picker
   const handleUpdateClick = () => {
@@ -65,7 +75,7 @@ const Profile = () => {
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
 
       const data = await res.json();
@@ -81,7 +91,9 @@ const Profile = () => {
             title: "Success!",
             text: "Profile picture updated successfully",
             icon: "success",
-            confirmButtonColor: "#dc2626",
+            background: "#101820",
+            color: "#f1ece2",
+            confirmButtonColor: "#b8892b",
           });
           setRefetch(!refetch);
         }
@@ -90,7 +102,9 @@ const Profile = () => {
           title: "Error",
           text: "Failed to upload image",
           icon: "error",
-          confirmButtonColor: "#dc2626",
+          background: "#101820",
+          color: "#f1ece2",
+          confirmButtonColor: "#b8892b",
         });
       }
     } catch (err) {
@@ -99,7 +113,9 @@ const Profile = () => {
         title: "Error",
         text: "Failed to upload image",
         icon: "error",
-        confirmButtonColor: "#dc2626",
+        background: "#101820",
+        color: "#f1ece2",
+        confirmButtonColor: "#b8892b",
       });
     } finally {
       setUploading(false);
@@ -119,7 +135,9 @@ const Profile = () => {
         title: "Error",
         text: "Name cannot be empty",
         icon: "error",
-        confirmButtonColor: "#dc2626",
+        background: "#101820",
+        color: "#f1ece2",
+        confirmButtonColor: "#b8892b",
       });
       return;
     }
@@ -131,18 +149,11 @@ const Profile = () => {
         title: "Success!",
         text: "Profile updated successfully",
         icon: "success",
-        confirmButtonColor: "#dc2626",
+        background: "#101820",
+        color: "#f1ece2",
+        confirmButtonColor: "#b8892b",
       });
     }
-  };
-
-  const getRemainingDays = (endDate) => {
-    if (!endDate) return 0;
-    const today = new Date();
-    const end = new Date(endDate);
-    const diffTime = end - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays > 0 ? diffDays : 0;
   };
 
   useEffect(() => {
@@ -161,373 +172,226 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center">
           <div className="relative">
-            <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-red-600 to-red-700 animate-pulse mb-4"></div>
+            <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-[#b8892b] to-[#8a651c] animate-pulse mb-4"></div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 border-4 border-red-200 border-t-red-600 rounded-full animate-spin"></div>
+              <div className="w-16 h-16 border-4 border-[#b8892b]/20 border-t-[#c9a24b] rounded-full animate-spin"></div>
             </div>
           </div>
-          <p className="text-gray-600 mt-4 font-medium">Loading profile...</p>
+          <p className="text-[#f1ece2]/60 mt-4 font-medium">
+            Loading profile...
+          </p>
         </div>
       </div>
     );
   }
 
-  const remainingDays = getRemainingDays(myInfo?.subscription?.endDate);
-  const hasActiveSubscription = remainingDays > 0 && myInfo?.subscription?.minute > 0;
+  const fieldRows = [
+    {
+      key: "name",
+      label: "Full Name",
+      icon: User,
+      editable: true,
+      type: "text",
+    },
+    { key: "email", label: "Email Address", icon: Mail, editable: false },
+    {
+      key: "phone",
+      label: "Phone Number",
+      icon: Phone,
+      editable: true,
+      type: "tel",
+    },
+    {
+      key: "address",
+      label: "Address",
+      icon: MapPin,
+      editable: true,
+      type: "text",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 md:p-6 lg:p-8">
-      <div className="max-w-6xl mx-auto">
+    <div
+      className="min-h-screen p-3 sm:p-4 md:p-6 lg:p-8"
+      style={{ fontFamily: "'Inter', ui-sans-serif, sans-serif" }}>
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-            Profile <span className="text-red-600">Settings</span>
+          <h1
+            className="text-2xl sm:text-3xl lg:text-4xl text-[#f1ece2] mb-2"
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontWeight: 600,
+            }}>
+            Profile <span className="text-[#c9a24b]">Settings</span>
           </h1>
-          <p className="text-gray-600 text-sm sm:text-base">
-            Manage your personal information and account settings
+          <p className="text-[#f1ece2]/45 text-sm sm:text-base">
+            Manage your personal information
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-          {/* Left Column - Profile Card */}
-          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-            {/* Profile Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-red-600 to-red-700 p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-                  {/* Profile Image */}
-                  <div className="relative">
-                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-gradient-to-br from-white/20 to-white/10 border-4 border-white/30">
-                      {myInfo?.image ? (
-                        <img
-                          src={myInfo?.image}
-                          alt="Profile"
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-white text-2xl sm:text-3xl md:text-4xl font-bold">
-                          {initials}
-                        </div>
-                      )}
-                    </div>
-                    
-                    <button
-                      onClick={handleUpdateClick}
-                      disabled={uploading}
-                      className={`absolute bottom-1 right-1 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:scale-105 transition-all duration-200 ${
-                        uploading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-xl'
-                      }`}
-                    >
-                      {uploading ? (
-                        <RefreshCw className="w-4 h-4 text-red-600 animate-spin" />
-                      ) : (
-                        <Camera className="w-4 h-4 text-red-600" />
-                      )}
-                    </button>
-                    
-                    <input
-                      type="file"
-                      accept="image/*"
-                      ref={fileInputRef}
-                      className="hidden"
-                      onChange={handleImageChange}
-                    />
-                  </div>
-
-                  {/* Profile Info */}
-                  <div className="text-white flex-1 text-center sm:text-left">
-                    <h2 className="text-xl sm:text-2xl font-bold mb-1 truncate">
-                      {myInfo?.name || "User"}
-                    </h2>
-                    <p className="text-red-100 text-sm sm:text-base mb-3 truncate">
-                      {myInfo?.email || "user@example.com"}
-                    </p>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                        <Shield className="w-3 h-3" />
-                        <span className="text-xs">Verified Account</span>
+        <div className="space-y-4 sm:space-y-6">
+          {/* Profile Card */}
+          <div className="rounded-2xl border border-[#b8892b]/20 bg-gradient-to-br from-[#16222f]/90 via-[#0e161e]/90 to-[#16222f]/90 shadow-xl overflow-hidden">
+            <div className="bg-gradient-to-r from-[#b8892b] to-[#8a651c] p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                {/* Profile Image */}
+                <div className="relative">
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-white/10 border-4 border-[#0a0f15]/30">
+                    {myInfo?.image ? (
+                      <img
+                        src={myInfo?.image}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[#0a0f15] text-2xl sm:text-3xl font-bold">
+                        {initials}
                       </div>
-                      <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                        <CheckCircle className="w-3 h-3" />
-                        <span className="text-xs">Active User</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Profile Details */}
-              <div className="p-4 sm:p-6 md:p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                  {/* Name */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4 text-gray-500" />
-                      <label className="text-sm font-medium text-gray-700">Full Name</label>
-                    </div>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="name"
-                        value={myInfo?.name || ""}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2.5 bg-gray-50 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                        placeholder="Enter your full name"
-                      />
-                    ) : (
-                      <p className="text-lg font-semibold text-gray-900">{myInfo?.name || "Not set"}</p>
                     )}
                   </div>
 
-                  {/* Email */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Mail className="w-4 h-4 text-gray-500" />
-                      <label className="text-sm font-medium text-gray-700">Email Address</label>
-                    </div>
-                    <p className="text-lg font-semibold text-gray-900">{myInfo?.email || "Not set"}</p>
-                  </div>
-
-                  {/* Phone */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-gray-500" />
-                      <label className="text-sm font-medium text-gray-700">Phone Number</label>
-                    </div>
-                    {isEditing ? (
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={myInfo?.phone || ""}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2.5 text-black bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                        placeholder="Enter phone number"
-                      />
+                  <button
+                    onClick={handleUpdateClick}
+                    disabled={uploading}
+                    className={`absolute bottom-1 right-1 w-10 h-10 rounded-full bg-[#0a0f15] border border-[#b8892b]/30 flex items-center justify-center shadow-lg hover:scale-105 transition-all duration-200 ${
+                      uploading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}>
+                    {uploading ? (
+                      <RefreshCw className="w-4 h-4 text-[#c9a24b] animate-spin" />
                     ) : (
-                      <p className="text-lg font-semibold text-gray-900">{myInfo?.phone || "Not set"}</p>
+                      <Camera className="w-4 h-4 text-[#c9a24b]" />
                     )}
-                  </div>
+                  </button>
 
-                  {/* Address */}
-                  <div className="space-y-2 md:col-span-2">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-gray-500" />
-                      <label className="text-sm font-medium text-gray-700">Address</label>
-                    </div>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="address"
-                        value={myInfo?.address || ""}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2.5 bg-gray-50 text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                        placeholder="Enter your address"
-                      />
-                    ) : (
-                      <p className="text-lg font-semibold text-gray-900">{myInfo?.address || "Not set"}</p>
-                    )}
-                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    className="hidden"
+                    onChange={handleImageChange}
+                  />
                 </div>
 
-                {/* Action Buttons */}
-                <div className="mt-8 pt-6 border-t border-gray-200">
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    {isEditing ? (
-                      <>
-                        <button
-                          onClick={handleSave}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 shadow-md hover:shadow-lg transition-all duration-200"
-                        >
-                          <Save className="w-4 h-4" />
-                          <span className="font-semibold">Save Changes</span>
-                        </button>
-                        <button
-                          onClick={() => setIsEditing(false)}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-200"
-                        >
-                          <X className="w-4 h-4" />
-                          <span className="font-semibold">Cancel</span>
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        onClick={() => setIsEditing(true)}
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 shadow-md hover:shadow-lg transition-all duration-200"
-                      >
-                        <Edit2 className="w-4 h-4" />
-                        <span className="font-semibold">Edit Profile</span>
-                      </button>
-                    )}
+                {/* Profile Info */}
+                <div className="flex-1 text-center sm:text-left">
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#0a0f15] mb-1 truncate">
+                    {myInfo?.name || "User"}
+                  </h2>
+                  <p className="text-[#0a0f15]/70 text-sm sm:text-base mb-3 truncate">
+                    {myInfo?.email || "user@example.com"}
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                    <div className="flex items-center gap-1 bg-[#0a0f15]/15 px-3 py-1 rounded-full">
+                      <Shield className="w-3 h-3 text-[#0a0f15]" />
+                      <span className="text-xs text-[#0a0f15] font-medium">
+                        Verified Account
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* QR Code Section */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-center">
-                    <QrIcon className="w-5 h-5 text-white" />
+            {/* Field rows */}
+            <div className="divide-y divide-[#b8892b]/10">
+              {fieldRows.map((field) => (
+                <div
+                  key={field.key}
+                  className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 px-4 sm:px-6 py-4">
+                  <div className="flex items-center gap-2 sm:w-48 shrink-0">
+                    <field.icon className="w-4 h-4 text-[#c9a24b]/70" />
+                    <label className="text-sm font-medium text-[#f1ece2]/60">
+                      {field.label}
+                    </label>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">Quick Connect QR</h3>
-                    <p className="text-sm text-gray-600">Share this code for instant calls</p>
-                  </div>
+                  {isEditing && field.editable ? (
+                    <input
+                      type={field.type}
+                      name={field.key}
+                      value={myInfo?.[field.key] || ""}
+                      onChange={handleChange}
+                      className="flex-1 px-3 py-2 bg-[#0a0f15]/60 border border-[#b8892b]/20 rounded-lg text-[#f1ece2] placeholder-[#f1ece2]/30 focus:outline-none focus:border-[#c9a24b] focus:ring-2 focus:ring-[#c9a24b]/25 transition-all duration-200"
+                      placeholder={`Enter ${field.label.toLowerCase()}`}
+                    />
+                  ) : (
+                    <p className="flex-1 text-base font-medium text-[#f1ece2]">
+                      {myInfo?.[field.key] || "Not set"}
+                    </p>
+                  )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <button className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                    <Download className="w-4 h-4" />
-                  </button>
-                  <button className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                    <Share2 className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+              ))}
+            </div>
 
-              {hasActiveSubscription ? (
-                <div className="space-y-6">
-                  <div className="flex justify-center">
-                    <QrCode user={user} />
-                  </div>
-                  <p className="text-center text-sm text-gray-600">
-                    Scan this QR code to start an instant call with you
-                  </p>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-red-50 to-white flex items-center justify-center mb-4">
-                    <AlertCircle className="w-8 h-8 text-red-600" />
-                  </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">Subscription Required</h4>
-                  <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                    You need an active subscription with available minutes to generate a QR code for instant calls.
-                  </p>
-                  <Link
-                    to="/dashboard/subscriptions"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 shadow-md hover:shadow-lg transition-all duration-200 font-semibold"
-                  >
-                    <CreditCard className="w-4 h-4" />
-                    Renew Subscription
-                  </Link>
-                </div>
-              )}
+            {/* Action Buttons */}
+            <div className="px-4 sm:px-6 py-5 border-t border-[#b8892b]/15">
+              <div className="flex flex-col sm:flex-row gap-3">
+                {isEditing ? (
+                  <>
+                    <button
+                      onClick={handleSave}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-gradient-to-r from-[#b8892b] to-[#8a651c] text-[#0a0f15] font-semibold shadow-lg hover:shadow-[0_10px_30px_-8px_rgba(184,137,43,0.5)] transition-all duration-200">
+                      <Save className="w-4 h-4" />
+                      Save Changes
+                    </button>
+                    <button
+                      onClick={() => setIsEditing(false)}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-[#b8892b]/20 bg-[#0a0f15]/60 text-[#f1ece2]/70 font-semibold hover:bg-[#0a0f15] transition-all duration-200">
+                      <X className="w-4 h-4" />
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-gradient-to-r from-[#b8892b] to-[#8a651c] text-[#0a0f15] font-semibold shadow-lg hover:shadow-[0_10px_30px_-8px_rgba(184,137,43,0.5)] transition-all duration-200">
+                    <Edit2 className="w-4 h-4" />
+                    Edit Profile
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Right Column - Subscription Info */}
-          <div className="space-y-4 sm:space-y-6">
-            {/* Subscription Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-center">
-                  <CreditCard className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">Subscription</h3>
-                  <p className="text-sm text-gray-600">Your current plan</p>
-                </div>
+          {/* Account Status — row design */}
+          <div className="rounded-2xl border border-[#b8892b]/20 bg-gradient-to-br from-[#16222f]/90 via-[#0e161e]/90 to-[#16222f]/90 shadow-xl overflow-hidden">
+            <div className="px-4 sm:px-6 py-4 border-b border-[#b8892b]/15 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-700 flex items-center justify-center">
+                <Shield className="w-5 h-5 text-white" />
               </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Current Plan</span>
-                  <span className="font-bold text-gray-900">{myInfo?.subscription?.plan || "Free"}</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Available Minutes</span>
-                  <span className="font-bold text-gray-900">{myInfo?.subscription?.minute.toFixed(2) || 0} min</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Remaining Days</span>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-gray-500" />
-                    <span className={`font-bold ${remainingDays <= 7 ? 'text-red-600' : 'text-gray-900'}`}>
-                      {remainingDays} days
-                    </span>
-                    {remainingDays <= 7 && remainingDays > 0 && (
-                      <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
-                        Expiring soon
-                      </span>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Renews on</span>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-gray-500" />
-                    <span className="font-bold text-gray-900">
-                      {myInfo?.subscription?.endDate 
-                        ? new Date(myInfo.subscription.endDate).toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric' 
-                          })
-                        : 'N/A'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <Link
-                  to="/dashboard/subscriptions"
-                  className="block w-full text-center px-4 py-3 bg-gradient-to-r from-red-50 to-white border border-red-200 text-red-600 rounded-lg hover:bg-red-100 hover:border-red-300 transition-all duration-200 font-semibold"
-                >
-                  Manage Subscription
-                </Link>
+              <div>
+                <h3 className="text-lg font-bold text-[#f1ece2]">
+                  Account Status
+                </h3>
+                <p className="text-sm text-[#f1ece2]/45">
+                  Security & Verification
+                </p>
               </div>
             </div>
 
-            {/* Account Status */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-green-600 to-green-700 flex items-center justify-center">
-                  <Shield className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">Account Status</h3>
-                  <p className="text-sm text-gray-600">Security & Verification</p>
-                </div>
+            <div className="divide-y divide-[#b8892b]/10">
+              <div className="flex items-center justify-between px-4 sm:px-6 py-3.5">
+                <span className="text-sm text-[#f1ece2]/50">
+                  Email Verified
+                </span>
+                <CheckCircle className="w-5 h-5 text-emerald-400" />
               </div>
-
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Email Verified</span>
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Phone Verified</span>
-                  {myInfo?.phone ? (
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                  ) : (
-                    <span className="text-xs text-red-600">Not set</span>
-                  )}
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">2FA Enabled</span>
-                  <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded-full">
-                    Recommended
-                  </span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Last Login</span>
-                  <span className="text-xs text-gray-500">Just now</span>
-                </div>
+              <div className="flex items-center justify-between px-4 sm:px-6 py-3.5">
+                <span className="text-sm text-[#f1ece2]/50">
+                  Phone Verified
+                </span>
+                {myInfo?.phone ? (
+                  <CheckCircle className="w-5 h-5 text-emerald-400" />
+                ) : (
+                  <span className="text-xs text-[#c9a24b]">Not set</span>
+                )}
               </div>
-
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                {/* <button className="w-full text-center px-4 py-3 bg-gradient-to-r from-gray-50 to-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 font-semibold">
-                  Security Settings
-                </button> */}
+              <div className="flex items-center justify-between px-4 sm:px-6 py-3.5">
+                <span className="text-sm text-[#f1ece2]/50">Last Login</span>
+                <span className="text-xs text-[#f1ece2]/40">Just now</span>
               </div>
             </div>
           </div>

@@ -36,11 +36,13 @@ import CallHistory from "./pages/Dashboard/CallHistory";
 import Contacts from "./pages/Dashboard/Contacts";
 import RazorpayCheck from "./pages/Dashboard/RazorpayPaymentValidation";
 import AdminDepartments from "./pages/Admin/AdminDepartments";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <Routes>
+        <Route path="*" element={<NotFound />} />
         {/* default for all guest and user */}
         <Route path="/" element={<AuthForm />} />
         <Route path="/login" element={<AuthForm />} />
@@ -56,31 +58,32 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="success" element={<Success />} />
-          <Route path="failed" element={<Failed />} />
-          <Route path="subscriptions" element={<Subscriptions />} />
-          <Route path="razorpay" element={<RazorpayCheck />} />
-          <Route path="transactions" element={<TransactionPage />} />
-          <Route path="call-history" element={<CallHistory />} />
           <Route path="contacts" element={<Contacts />} />
+          {/* <Route path="call-history" element={<CallHistory />} /> */}
+
+          {/* <Route path="success" element={<Success />} /> */}
+          {/* <Route path="failed" element={<Failed />} /> */}
+          {/* <Route path="subscriptions" element={<Subscriptions />} /> */}
+          {/* <Route path="razorpay" element={<RazorpayCheck />} /> */}
+          {/* <Route path="transactions" element={<TransactionPage />} /> */}
+
         </Route>
 
         {/* admin */}
         <Route path="/admin" element={<AdminDashboardLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="users" element={<AllUsers />} />
-          <Route path="subscriptions" element={<AdminSubscription />} />
-          <Route path="transactions" element={<AdminTransaction />} />
           <Route path="settings" element={<Settings />} />
-          <Route path="about" element={<AdminAbout />} />
-          <Route path="contact" element={<AdminContact />} />
-          <Route path="terms" element={<AdminTerms />} />
-          <Route path="privacy" element={<AdminPrivacy />} />
-          <Route path="credit" element={<AdminCredit />} />
-          <Route path="distributor" element={<AdminDistributor />} />
           <Route path="departments" element={<AdminDepartments />} />
+          {/* <Route path="subscriptions" element={<AdminSubscription />} /> */}
+          {/* <Route path="transactions" element={<AdminTransaction />} /> */}
+          {/* <Route path="about" element={<AdminAbout />} /> */}
+          {/* <Route path="contact" element={<AdminContact />} /> */}
+          {/* <Route path="terms" element={<AdminTerms />} /> */}
+          {/* <Route path="privacy" element={<AdminPrivacy />} /> */}
+          {/* <Route path="credit" element={<AdminCredit />} /> */}
+          {/* <Route path="distributor" element={<AdminDistributor />} /> */}
         </Route>
-
       </Routes>
     </div>
   );

@@ -53,9 +53,9 @@ export const Provider = ({ children }) => {
       });
 
       // Version check
-      if (localStorage.getItem("app") !== "CallBell 2.x.x") {
+      if (localStorage.getItem("app") !== "CallBell-hotel 2.x.x") {
         localStorage.clear();
-        localStorage.setItem("app", "CallBell 2.x.x");
+        localStorage.setItem("app", "CallBell-hotel 2.x.x");
       }
 
       let token = localStorage.getItem("token");
@@ -120,8 +120,8 @@ export const Provider = ({ children }) => {
         window.Android.onSocketIdAvailable(socketId);
       }
     });
-    socket.on("incoming-call", ({ from, roomName }) => {
-      setIncomingCall({ from, roomName });
+    socket.on("incoming-call", ({ from, roomName, room }) => {
+      setIncomingCall({ from, roomName, room });
       setModalOpen(true);
     });
 
@@ -138,27 +138,13 @@ export const Provider = ({ children }) => {
       if (user) {
         await updateUser({ id: user.id, data: { busy: false } });
         const callStart = Number(localStorage.getItem("callStart"));
+
         if (!callStart) {
           return navigate("/dashboard");
         }
+
         const totalSeconds = Math.floor((Date.now() - callStart) / 1000);
         const totalMinutes = totalSeconds / 60;
-        if (totalMinutes <= 0) {
-          return navigate("/dashboard"); // redirect back to home (or show a modal)
-        }
-        let newBalance = myInfo.subscription.minute - totalMinutes;
-        if (newBalance < 0) {
-          newBalance = 0;
-        }
-        const dataa = {
-          "subscription.minute": newBalance,
-        };
-        const fetch = async () => {
-          const { data } = await updateUser({ id: user.id, data: dataa });
-          if (data.success) {
-            localStorage.removeItem("callStart");
-          }
-        };
 
         const newData = {
           gestId: incomingCall.from.gestId,
@@ -215,28 +201,8 @@ export const Provider = ({ children }) => {
     setIncomingCall(null);
   }, [incomingCall]);
 
-  const getRemainingDays = (endDate) => {
-    const today = new Date();
-    const end = new Date(endDate);
-    const diffTime = end - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays > 0 ? diffDays : 0;
-  };
-
   const acceptCall = useCallback(async () => {
     if (!incomingCall) return;
-
-    if (
-      myInfo?.subscription?.minute <= 0 ||
-      getRemainingDays(myInfo?.subscription?.endDate) <= 0
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Plan expired or minutes exhausted",
-      });
-      return;
-    }
 
     socket.emit("call-accepted", {
       roomName: incomingCall.roomName,
@@ -261,19 +227,17 @@ export const Provider = ({ children }) => {
         // set user busy
         await updateUser({ id: user.id, data: { busy: false } });
         const callStart = Number(localStorage.getItem("callStart"));
+
         if (!callStart) {
           return navigate("/dashboard");
         }
+
         const totalSeconds = Math.floor((Date.now() - callStart) / 1000);
         const totalMinutes = totalSeconds / 60;
+
         if (totalMinutes <= 0) {
           return navigate("/dashboard"); // redirect back to home (or show a modal)
         }
-        let newBalance = myInfo.subscription.minute - totalMinutes;
-        if (newBalance < 0) {
-          newBalance = 0;
-        }
-
         const newData = {
           gestId: incomingCall.from.gestId,
           gestName: incomingCall.from.name,
@@ -281,22 +245,13 @@ export const Provider = ({ children }) => {
           duration: totalMinutes,
         };
 
-        console.log(newData);
-
-        const dataa = {
-          "subscription.minute": newBalance,
-        };
-
         const fetch = async () => {
-          await updateUser({ id: user.id, data: dataa });
           await updateContactList({
             id: user.id,
             data: newData,
           });
         };
         fetch();
-
-        // new code for gest contact info
 
         socket.emit("end-call", {
           targetSocketId: incomingCall.from.gestSocketId,

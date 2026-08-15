@@ -51,15 +51,7 @@ const UserInfo = () => {
 
   const [loading, setLoading] = useState(true);
   const [departments, setDepartments] = useState([]);
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [activeCall, setActiveCall] = useState(null); // department currently being called
-  const [searchParams] = useSearchParams();
-
-  console.log(departments);
-
-  // Back-compat: some old QR links may still carry userId/name; new links should carry propertyId
-  const propertyId =
-    searchParams.get("propertyId") || searchParams.get("userId");
+  const [activeCall, setActiveCall] = useState(null);
 
   const { user: u, logout } = useCall();
   const [showUser, setShowUser] = useState(false);
@@ -73,19 +65,16 @@ const UserInfo = () => {
 
   useEffect(() => {
     setLoading(true);
-    if (propertyId) {
-      const fetch = async () => {
-        const { data } = await getDepartmentUsers();
-        if (data.success) {
-          setDepartments(data.data || []);
-        }
-        setLoading(false);
-      };
-      fetch();
-    } else {
+
+    const fetch = async () => {
+      const { data } = await getDepartmentUsers();
+      if (data.success) {
+        setDepartments(data.users || []);
+      }
       setLoading(false);
-    }
-  }, [propertyId]);
+    };
+    fetch();
+  }, []);
 
   if (u) {
     logout();
@@ -127,27 +116,6 @@ const UserInfo = () => {
           <p className="mt-4 font-medium text-[#f1ece2]/60">
             Loading guest services...
           </p>
-        </div>
-      ) : isBlocked ? (
-        /* ── PROPERTY-WIDE BLOCKED STATE ── */
-        <div className="relative z-10 w-full max-w-md text-center">
-          <div className="rounded-2xl border border-[#b8892b]/20 bg-gradient-to-br from-[#16222f]/90 via-[#0e161e]/90 to-[#16222f]/90 p-8 shadow-2xl backdrop-blur-xl">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-[#b8892b]/30 bg-[#b8892b]/10">
-              <Ban className="h-8 w-8 text-[#c9a24b]" />
-            </div>
-            <h3 className="mb-2 text-xl font-bold text-[#f1ece2]">
-              Call Access Unavailable
-            </h3>
-            <p className="mx-auto max-w-xs text-sm text-[#f1ece2]/45">
-              You're currently unable to reach guest services from this room.
-            </p>
-            <div className="mt-6 border-t border-[#b8892b]/15 pt-6">
-              <div className="flex items-center justify-center gap-2 text-sm text-[#f1ece2]/45">
-                <Shield className="h-4 w-4 text-[#c9a24b]/70" />
-                <span>Please contact the front desk directly</span>
-              </div>
-            </div>
-          </div>
         </div>
       ) : (
         <div className="relative z-10 w-full max-w-3xl mx-auto">
@@ -204,9 +172,10 @@ const UserInfo = () => {
                     }>
                     <div className="flex justify-center">
                       <CallManager
-                        userId={activeCall.userId}
-                        userName={activeCall.userName}
+                        userId={activeCall._id}
+                        userName={activeCall.name}
                         isBusy={activeCall.isBusy}
+                        setActiveCall={setActiveCall}
                       />
                     </div>
                   </Suspense>
