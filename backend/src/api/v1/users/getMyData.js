@@ -28,7 +28,8 @@ const getMyData = async (req, res, next) => {
         transactionHistory: result.transactionHistory,
         subscription: result.subscription,
         fcmToken: result.fcmToken,
-        busy: result.busy
+        busy: result.busy,
+        department: result.department,
       },
     });
   } catch (error) {
