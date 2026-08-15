@@ -5,7 +5,7 @@ const gestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone: { type: String, required: true },
+  room: { type: String, required: true },
   ip: { type: String },
   blocked: { type: Boolean, default: false },
 });

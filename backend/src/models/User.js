@@ -63,23 +63,7 @@ const userSchema = new mongoose.Schema({
       planMinute: { type: Number, default: 0 },
     },
   ],
-  subscription: {
-    plan: { type: String, default: "free" },
-    status: { type: String, default: "active" },
-    startDate: { type: Date, default: Date.now },
-    endDate: { type: Date },
-    minute: {
-      type: Number,
-      default: 0,
-    },
-    freeTrail: { type: Boolean, default: false },
-  },
-  createdAt: { type: Date, default: Date.now }, // Optional: add timestamp
-  distributorStatus: {
-    type: String,
-    enum: ["pending", "approved", "rejected"],
-    default: "pending",
-  },
+  createdAt: { type: Date, default: Date.now },
   referenceBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   busy: { type: Boolean, default: false },
 
