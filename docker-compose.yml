@@ -12,7 +12,7 @@ services:
     build: ./frontend
     container_name: callbell-hotel-frontend
     ports:
-      - "3005:3000"
+      - "3006:3000"
     depends_on:
       - backend
     restart: always
