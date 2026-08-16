@@ -3,14 +3,14 @@ version: "3.9"
 services:
   backend:
     build: ./backend
-    container_name: node-backend
+    container_name: callbell-hotel-backend
     ports:
       - "5010:5000"
     restart: always
  
   frontend:
     build: ./frontend
-    container_name: react-frontend
+    container_name: callbell-hotel-frontend
     ports:
       - "3005:3000"
     depends_on:
