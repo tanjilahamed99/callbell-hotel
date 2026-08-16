@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: [
-      'callbell.in',   // allow this host
+      'tarainn.callbell.in',   // allow this host
     ]
   }
 });
