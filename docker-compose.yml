@@ -5,14 +5,14 @@ services:
     build: ./backend
     container_name: node-backend
     ports:
-      - "5000:5000"
+      - "5010:5000"
     restart: always
  
   frontend:
     build: ./frontend
     container_name: react-frontend
     ports:
-      - "3000:3000"
+      - "3005:3000"
     depends_on:
       - backend
     restart: always
