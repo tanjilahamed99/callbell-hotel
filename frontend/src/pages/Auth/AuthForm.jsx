@@ -147,7 +147,7 @@ const AuthForm = () => {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontWeight: 600,
             }}>
-            The Meridian
+            The Tarainn
           </h1>
           <p className="mt-1 text-xs uppercase tracking-[0.3em] text-[#c9a24b]/70">
             Guest Services Portal

@@ -116,7 +116,7 @@ const GuestModal = ({ setShowUser }) => {
               <DoorClosed className="h-4 w-4 text-[#0a0f15]" />
             </div>
             <span className="text-[17px] font-medium text-[#f1ece2]">
-              The Meridian
+              The Tarainn
             </span>
           </div>
 

@@ -340,7 +340,7 @@ const AdminDepartments = () => {
                       value={form.email}
                       onChange={handleChange}
                       type="email"
-                      placeholder="reception@meridian.com"
+                      placeholder="reception@Tarainn.com"
                       className="w-full h-11 pl-10 pr-3 rounded-lg border border-[#b8892b]/20 bg-[#0a0f15]/60 text-sm text-[#f1ece2] placeholder:text-[#f1ece2]/30 focus:outline-none focus:border-[#c9a24b] focus:ring-4 focus:ring-[#c9a24b]/15 transition"
                     />
                   </div>

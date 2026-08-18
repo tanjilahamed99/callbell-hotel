@@ -132,7 +132,7 @@ const UserInfo = () => {
               Guest <span className="text-[#c9a24b]">Services</span>
             </h1>
             <p className="mt-2 text-sm uppercase tracking-[0.25em] text-[#c9a24b]/70">
-              The Meridian — Room {gest?.room || "—"}
+              The Tarainn — Room {gest?.room || "—"}
             </p>
           </div>
 
@@ -262,7 +262,7 @@ const UserInfo = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-[#f1ece2]">
-                      The Meridian
+                      The Tarainn
                     </p>
                     <p className="text-xs text-[#f1ece2]/40">
                       Guest Services Portal

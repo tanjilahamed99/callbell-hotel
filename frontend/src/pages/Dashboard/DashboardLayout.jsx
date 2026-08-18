@@ -91,7 +91,7 @@ const DashboardLayout = () => {
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontWeight: 600,
                   }}>
-                  The Meridian
+                  The Tarainn
                 </span>
                 <p className="text-xs uppercase tracking-[0.2em] text-[#c9a24b]/70">
                   Staff Dashboard
@@ -252,7 +252,7 @@ const DashboardLayout = () => {
               <div className="flex flex-col md:flex-row justify-between items-center gap-3">
                 <div className="text-xs sm:text-sm text-[#f1ece2]/40 text-center md:text-left order-2 md:order-1">
                   <p>
-                    © {new Date().getFullYear()} The Meridian. All rights
+                    © {new Date().getFullYear()} The Tarainn. All rights
                     reserved.
                   </p>
                 </div>

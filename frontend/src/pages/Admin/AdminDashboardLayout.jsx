@@ -111,7 +111,7 @@ const AdminDashboardLayout = () => {
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontWeight: 600,
                   }}>
-                  The Meridian
+                  The Tarainn
                 </span>
                 <p className="text-xs uppercase tracking-[0.2em] text-[#c9a24b]/70">
                   Admin Panel
@@ -131,7 +131,7 @@ const AdminDashboardLayout = () => {
                   {user?.name || "Admin"}
                 </p>
                 <p className="text-sm text-[#f1ece2]/45 truncate">
-                  {user?.email || "admin@meridian.com"}
+                  {user?.email || "admin@Tarainn.com"}
                 </p>
                 <div className="flex items-center mt-1">
                   <div className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></div>
@@ -259,7 +259,7 @@ const AdminDashboardLayout = () => {
               <div className="flex flex-col md:flex-row justify-between items-center gap-3">
                 <div className="text-xs sm:text-sm text-[#f1ece2]/40 text-center md:text-left">
                   <p>
-                    © {new Date().getFullYear()} The Meridian Admin Panel.
+                    © {new Date().getFullYear()} The Tarainn Admin Panel.
                     All rights reserved.
                   </p>
                 </div>
