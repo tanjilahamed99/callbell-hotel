@@ -102,8 +102,8 @@ const AdminDepartments = () => {
         icon: "warning",
         title: "Missing fields",
         text: "Name and email are required.",
-        background: "#101820",
-        color: "#eef2f7",
+        background: "#ffffff",
+        color: "#111827",
         confirmButtonColor: "#2563eb",
       });
     }
@@ -113,8 +113,8 @@ const AdminDepartments = () => {
         icon: "warning",
         title: "Password required",
         text: "Please set a password for this department account.",
-        background: "#101820",
-        color: "#eef2f7",
+        background: "#ffffff",
+        color: "#111827",
         confirmButtonColor: "#2563eb",
       });
     }
@@ -145,8 +145,8 @@ const AdminDepartments = () => {
         icon: "success",
         title: editingId ? "Updated" : "Created",
         text: `Department account ${editingId ? "updated" : "created"} successfully.`,
-        background: "#101820",
-        color: "#eef2f7",
+        background: "#ffffff",
+        color: "#111827",
         confirmButtonColor: "#2563eb",
         timer: 1500,
         showConfirmButton: false,
@@ -159,8 +159,8 @@ const AdminDepartments = () => {
         icon: "error",
         title: "Something went wrong",
         text: err.response?.data?.message || err.message,
-        background: "#101820",
-        color: "#eef2f7",
+        background: "#ffffff",
+        color: "#111827",
         confirmButtonColor: "#2563eb",
       });
     } finally {
@@ -174,8 +174,8 @@ const AdminDepartments = () => {
       title: "Remove this account?",
       text: `${dept.name} will no longer be reachable by guests.`,
       showCancelButton: true,
-      background: "#101820",
-      color: "#eef2f7",
+      background: "#ffffff",
+      color: "#111827",
       confirmButtonText: "Remove",
       confirmButtonColor: "#2563eb",
       cancelButtonColor: "#6b7280",
@@ -192,8 +192,8 @@ const AdminDepartments = () => {
         icon: "error",
         title: "Couldn't remove account",
         text: err.response?.data?.message || err.message,
-        background: "#101820",
-        color: "#eef2f7",
+        background: "#ffffff",
+        color: "#111827",
         confirmButtonColor: "#2563eb",
       });
     }
@@ -205,14 +205,14 @@ const AdminDepartments = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h2
-            className="text-xl sm:text-2xl text-[#eef2f7]"
+            className="text-xl sm:text-2xl text-gray-900"
             style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontWeight: 600,
             }}>
             Departments
           </h2>
-          <p className="text-sm text-[#eef2f7]/45 mt-1">
+          <p className="text-sm text-gray-500 mt-1">
             Manage guest-facing call accounts — reception, room service,
             restaurant, and more.
           </p>
@@ -228,43 +228,43 @@ const AdminDepartments = () => {
       {/* List — row design */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-16">
-          <Loader2 className="w-8 h-8 text-teal-400 animate-spin mb-3" />
-          <p className="text-sm text-[#eef2f7]/45">Loading departments...</p>
+          <Loader2 className="w-8 h-8 text-teal-600 animate-spin mb-3" />
+          <p className="text-sm text-gray-500">Loading departments...</p>
         </div>
       ) : departments.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-          <Building2 className="w-10 h-10 text-[#eef2f7]/20 mb-3" />
-          <p className="text-[#eef2f7]/45">No department accounts yet.</p>
+          <Building2 className="w-10 h-10 text-gray-300 mb-3" />
+          <p className="text-gray-500">No department accounts yet.</p>
           <button
             onClick={openCreate}
-            className="mt-4 text-sm font-medium text-teal-400 hover:text-teal-300">
+            className="mt-4 text-sm font-medium text-teal-600 hover:text-teal-700">
             Create your first one
           </button>
         </div>
       ) : (
-        <div className="rounded-2xl border border-blue-500/20 bg-[#0a0f15]/40 overflow-hidden">
-          <div className="divide-y divide-blue-500/10">
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+          <div className="divide-y divide-gray-100">
             {departments.map((dept) => {
               const meta = DEPT_META[dept.department] || DEPT_META.staff;
               const Icon = meta.icon;
               return (
                 <div
                   key={dept._id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 hover:bg-blue-500/5 transition-colors">
+                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 hover:bg-blue-50/60 transition-colors">
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center flex-shrink-0">
                       <Icon className="w-5 h-5 text-white" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-sm font-semibold text-[#eef2f7] truncate">
+                        <p className="text-sm font-semibold text-gray-900 truncate">
                           {dept.name}
                         </p>
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-blue-500/10 text-teal-400 text-[11px] font-medium">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-blue-50 text-teal-600 text-[11px] font-medium">
                           {meta.label}
                         </span>
                       </div>
-                      <p className="text-xs text-[#eef2f7]/40 truncate">
+                      <p className="text-xs text-gray-400 truncate">
                         {dept.email}
                       </p>
                     </div>
@@ -273,13 +273,13 @@ const AdminDepartments = () => {
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <button
                       onClick={() => openEdit(dept)}
-                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[#eef2f7]/60 hover:bg-blue-500/10 hover:text-teal-400 text-sm font-medium transition-colors duration-200">
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-gray-500 hover:bg-blue-50 hover:text-teal-600 text-sm font-medium transition-colors duration-200">
                       <Pencil className="w-3.5 h-3.5" />
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(dept)}
-                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[#eef2f7]/60 hover:bg-red-500/10 hover:text-red-400 text-sm font-medium transition-colors duration-200">
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-gray-500 hover:bg-red-50 hover:text-red-600 text-sm font-medium transition-colors duration-200">
                       <Trash2 className="w-3.5 h-3.5" />
                       Remove
                     </button>
@@ -294,15 +294,15 @@ const AdminDepartments = () => {
       {/* Create / Edit Modal — portal, escapes layout clipping */}
       {showModal &&
         createPortal(
-          <div className="fixed inset-0 bg-[#0a0f15]/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-3 sm:p-4">
-            <div className="w-full max-w-md max-h-[90vh] flex flex-col rounded-2xl border border-blue-500/20 bg-gradient-to-br from-[#16222f] via-[#101820] to-[#0e161e] overflow-hidden shadow-2xl">
-              <div className="flex-shrink-0 flex items-center justify-between px-5 sm:px-6 py-4 border-b border-blue-500/15">
-                <h3 className="font-semibold text-[#eef2f7]">
+          <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-3 sm:p-4">
+            <div className="w-full max-w-md max-h-[90vh] flex flex-col rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-2xl">
+              <div className="flex-shrink-0 flex items-center justify-between px-5 sm:px-6 py-4 border-b border-gray-200">
+                <h3 className="font-semibold text-gray-900">
                   {editingId ? "Edit Department" : "New Department"}
                 </h3>
                 <button
                   onClick={() => setShowModal(false)}
-                  className="p-1.5 rounded-lg text-[#eef2f7]/40 hover:bg-blue-500/10 hover:text-[#eef2f7]/70 transition-colors">
+                  className="p-1.5 rounded-lg text-gray-400 hover:bg-blue-50 hover:text-gray-600 transition-colors">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -311,45 +311,45 @@ const AdminDepartments = () => {
                 onSubmit={handleSubmit}
                 className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-teal-400/70 uppercase tracking-wide mb-1.5">
+                  <label className="block text-xs font-semibold text-teal-600/80 uppercase tracking-wide mb-1.5">
                     Display Name
                   </label>
                   <div className="relative">
-                    <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-400/50" />
+                    <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-600/50" />
                     <input
                       name="name"
                       value={form.name}
                       onChange={handleChange}
                       type="text"
                       placeholder="Front Desk"
-                      className="w-full h-11 pl-10 pr-3 rounded-lg border border-blue-500/20 bg-[#0a0f15]/60 text-sm text-[#eef2f7] placeholder:text-[#eef2f7]/30 focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/15 transition"
+                      className="w-full h-11 pl-10 pr-3 rounded-lg border border-gray-200 bg-gray-50 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/15 transition"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-teal-400/70 uppercase tracking-wide mb-1.5">
+                  <label className="block text-xs font-semibold text-teal-600/80 uppercase tracking-wide mb-1.5">
                     Email
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-400/50" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-600/50" />
                     <input
                       name="email"
                       value={form.email}
                       onChange={handleChange}
                       type="email"
                       placeholder="reception@tarainn.com"
-                      className="w-full h-11 pl-10 pr-3 rounded-lg border border-blue-500/20 bg-[#0a0f15]/60 text-sm text-[#eef2f7] placeholder:text-[#eef2f7]/30 focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/15 transition"
+                      className="w-full h-11 pl-10 pr-3 rounded-lg border border-gray-200 bg-gray-50 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/15 transition"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-teal-400/70 uppercase tracking-wide mb-1.5">
+                  <label className="block text-xs font-semibold text-teal-600/80 uppercase tracking-wide mb-1.5">
                     {editingId ? "New Password (optional)" : "Password"}
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-400/50" />
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-600/50" />
                     <input
                       name="password"
                       value={form.password}
@@ -358,22 +358,22 @@ const AdminDepartments = () => {
                       placeholder={
                         editingId ? "Leave blank to keep current" : "••••••••"
                       }
-                      className="w-full h-11 pl-10 pr-3 rounded-lg border border-blue-500/20 bg-[#0a0f15]/60 text-sm text-[#eef2f7] placeholder:text-[#eef2f7]/30 focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/15 transition"
+                      className="w-full h-11 pl-10 pr-3 rounded-lg border border-gray-200 bg-gray-50 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/15 transition"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-teal-400/70 uppercase tracking-wide mb-1.5">
+                  <label className="block text-xs font-semibold text-teal-600/80 uppercase tracking-wide mb-1.5">
                     Department
                   </label>
                   <select
                     name="department"
                     value={form.department}
                     onChange={handleChange}
-                    className="w-full h-11 px-3 rounded-lg border border-blue-500/20 bg-[#0a0f15]/60 text-sm text-[#eef2f7] focus:outline-none focus:border-teal-400 focus:ring-4 focus:ring-teal-400/15 transition">
+                    className="w-full h-11 px-3 rounded-lg border border-gray-200 bg-gray-50 text-sm text-gray-900 focus:outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/15 transition">
                     {DEPARTMENTS.map((d) => (
-                      <option key={d} value={d} className="bg-[#101820]">
+                      <option key={d} value={d}>
                         {DEPT_META[d].label}
                       </option>
                     ))}
@@ -384,7 +384,7 @@ const AdminDepartments = () => {
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="flex-1 h-11 rounded-lg border border-blue-500/20 text-[#eef2f7]/70 font-medium hover:bg-blue-500/10 transition-colors">
+                    className="flex-1 h-11 rounded-lg border border-gray-200 text-gray-600 font-medium hover:bg-blue-50 transition-colors">
                     Cancel
                   </button>
                   <button

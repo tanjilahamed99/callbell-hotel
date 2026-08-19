@@ -81,8 +81,8 @@ const AllUsers = () => {
       </div>`,
       icon: "warning",
       showCancelButton: true,
-      background: "#101820",
-      color: "#eef2f7",
+      background: "#ffffff",
+      color: "#111827",
       confirmButtonColor: "#2563eb",
       cancelButtonColor: "#6b7280",
       confirmButtonText: "Delete User",
@@ -100,8 +100,8 @@ const AllUsers = () => {
             title: "Deleted!",
             text: "User has been deleted successfully.",
             icon: "success",
-            background: "#101820",
-            color: "#eef2f7",
+            background: "#ffffff",
+            color: "#111827",
             confirmButtonColor: "#2563eb",
           });
         }
@@ -110,8 +110,8 @@ const AllUsers = () => {
           title: "Error!",
           text: "Failed to delete user. Please try again.",
           icon: "error",
-          background: "#101820",
-          color: "#eef2f7",
+          background: "#ffffff",
+          color: "#111827",
           confirmButtonColor: "#2563eb",
         });
         console.error(err);
@@ -148,10 +148,10 @@ const AllUsers = () => {
           <div className="relative">
             <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-blue-600 to-teal-500 animate-pulse mb-4"></div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 border-4 border-blue-500/20 border-t-teal-400 rounded-full animate-spin"></div>
+              <div className="w-16 h-16 border-4 border-blue-200 border-t-teal-500 rounded-full animate-spin"></div>
             </div>
           </div>
-          <p className="text-[#eef2f7]/60 mt-4 font-medium">
+          <p className="text-gray-500 mt-4 font-medium">
             Loading users...
           </p>
         </div>
@@ -176,22 +176,22 @@ const AllUsers = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h1
-              className="text-2xl sm:text-3xl text-[#eef2f7]"
+              className="text-2xl sm:text-3xl text-gray-900"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontWeight: 600,
               }}>
-              User <span className="text-teal-400">Management</span>
+              User <span className="text-teal-600">Management</span>
             </h1>
-            <p className="text-[#eef2f7]/45 mt-1 text-sm sm:text-base">
+            <p className="text-gray-500 mt-1 text-sm sm:text-base">
               Manage all registered staff accounts
             </p>
           </div>
         </div>
 
         {/* Stats — row design */}
-        <div className="rounded-2xl border border-blue-500/20 bg-[#0a0f15]/40 overflow-hidden mb-6">
-          <div className="divide-y sm:divide-y-0 sm:divide-x divide-blue-500/10 sm:flex">
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden mb-6">
+          <div className="divide-y sm:divide-y-0 sm:divide-x divide-gray-100 sm:flex">
             {[
               { label: "Total Users", value: stats.total, icon: Users },
               { label: "Administrators", value: stats.admins, icon: Shield },
@@ -199,12 +199,12 @@ const AllUsers = () => {
               <div
                 key={i}
                 className="flex-1 flex items-center gap-3 px-4 sm:px-6 py-4">
-                <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                  <stat.icon className="w-5 h-5 text-teal-400" />
+                <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center">
+                  <stat.icon className="w-5 h-5 text-teal-600" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#eef2f7]/45">{stat.label}</p>
-                  <p className="text-xl font-bold text-[#eef2f7]">
+                  <p className="text-xs text-gray-500">{stat.label}</p>
+                  <p className="text-xl font-bold text-gray-900">
                     {stat.value}
                   </p>
                 </div>
@@ -215,38 +215,38 @@ const AllUsers = () => {
       </div>
 
       {/* Search and Filter */}
-      <div className="rounded-2xl border border-blue-500/20 bg-[#0a0f15]/40 p-4 sm:p-6 mb-6">
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 sm:p-6 mb-6">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#eef2f7]/30" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300" />
               <input
                 type="text"
                 placeholder="Search users by name, email, phone..."
                 value={searchTerm}
                 onChange={handleSearch}
-                className="w-full pl-10 pr-4 py-3 bg-[#0a0f15]/60 border border-blue-500/20 rounded-lg text-[#eef2f7] placeholder-[#eef2f7]/30 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition-all"
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all"
               />
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#eef2f7]/30" />
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300" />
               <input
                 type="date"
                 value={fromDate}
                 onChange={(e) => setFromDate(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-[#0a0f15]/60 border border-blue-500/20 rounded-lg text-[#eef2f7] focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition-all"
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all"
               />
             </div>
             <div className="relative flex-1">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#eef2f7]/30" />
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300" />
               <input
                 type="date"
                 value={toDate}
                 onChange={(e) => setToDate(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-[#0a0f15]/60 border border-blue-500/20 rounded-lg text-[#eef2f7] focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition-all"
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all"
               />
             </div>
           </div>
@@ -258,7 +258,7 @@ const AllUsers = () => {
               setToDate("");
               filterUsers("", "", "");
             }}
-            className="w-full lg:w-auto px-4 py-3 border border-blue-500/20 text-[#eef2f7]/70 rounded-lg hover:bg-blue-500/10 transition-all duration-200 font-medium flex items-center justify-center gap-2">
+            className="w-full lg:w-auto px-4 py-3 border border-gray-200 text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 font-medium flex items-center justify-center gap-2">
             <RefreshCw className="w-4 h-4" />
             Reset Filters
           </button>
@@ -266,36 +266,36 @@ const AllUsers = () => {
       </div>
 
       {/* Users — row list */}
-      <div className="rounded-2xl border border-blue-500/20 bg-[#0a0f15]/40 overflow-hidden">
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
         {filteredUsers.length > 0 ? (
-          <div className="divide-y divide-blue-500/10">
+          <div className="divide-y divide-gray-100">
             {filteredUsers.map((u) => (
               <div
                 key={u._id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 hover:bg-blue-500/5 transition-colors">
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 hover:bg-blue-50/60 transition-colors">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-11 h-11 rounded-full bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center text-white font-bold flex-shrink-0">
                     {getInitials(u.name)}
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-sm font-semibold text-[#eef2f7] truncate">
+                      <p className="text-sm font-semibold text-gray-900 truncate">
                         {u.name}
                       </p>
                       {u.role === "admin" && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-blue-500/10 text-teal-400">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-blue-50 text-teal-600">
                           Admin
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-[#eef2f7]/40 truncate">
+                    <p className="text-xs text-gray-400 truncate">
                       {u.email} {u.phone ? `· ${u.phone}` : ""}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 flex-shrink-0">
-                  <span className="text-xs text-[#eef2f7]/40">
+                  <span className="text-xs text-gray-400">
                     Joined{" "}
                     {u.createdAt
                       ? new Date(u.createdAt).toLocaleDateString("en-US", {
@@ -307,13 +307,13 @@ const AllUsers = () => {
                   </span>
                   <button
                     onClick={() => handleOpenModal(u)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-500/10 text-teal-400 rounded-lg hover:bg-blue-500/20 transition-colors">
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-50 text-teal-600 rounded-lg hover:bg-blue-100 transition-colors">
                     <Eye className="w-3.5 h-3.5" />
                     View
                   </button>
                   <button
                     onClick={() => handleDelete(u._id, u.name)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors">
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
                     <Trash2 className="w-3.5 h-3.5" />
                     Delete
                   </button>
@@ -323,13 +323,13 @@ const AllUsers = () => {
           </div>
         ) : (
           <div className="text-center py-16">
-            <div className="w-16 h-16 mx-auto rounded-full bg-[#eef2f7]/5 flex items-center justify-center mb-4">
-              <Users className="w-8 h-8 text-[#eef2f7]/25" />
+            <div className="w-16 h-16 mx-auto rounded-full bg-gray-50 flex items-center justify-center mb-4">
+              <Users className="w-8 h-8 text-gray-300" />
             </div>
-            <h3 className="text-lg font-medium text-[#eef2f7] mb-2">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
               No users found
             </h3>
-            <p className="text-[#eef2f7]/40 max-w-md mx-auto">
+            <p className="text-gray-400 max-w-md mx-auto">
               {searchTerm || fromDate || toDate
                 ? "Try adjusting your search or filter criteria."
                 : "No users have been registered yet."}
@@ -338,14 +338,14 @@ const AllUsers = () => {
         )}
 
         {filteredUsers.length > 0 && (
-          <div className="border-t border-blue-500/15 bg-[#0a0f15]/40 px-4 py-3">
-            <div className="text-sm text-[#eef2f7]/45">
+          <div className="border-t border-gray-200 bg-gray-50 px-4 py-3">
+            <div className="text-sm text-gray-500">
               Showing{" "}
-              <span className="font-bold text-[#eef2f7]/70">
+              <span className="font-bold text-gray-700">
                 {filteredUsers.length}
               </span>{" "}
               of{" "}
-              <span className="font-bold text-[#eef2f7]/70">
+              <span className="font-bold text-gray-700">
                 {users.length}
               </span>{" "}
               users
