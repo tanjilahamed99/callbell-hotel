@@ -18,21 +18,7 @@ import {
   unblockGest,
 } from "../../hooks/users/updateUser";
 
-const useBrandFonts = () => {
-  useEffect(() => {
-    const id = "auth-brand-fonts";
-    if (document.getElementById(id)) return;
-    const link = document.createElement("link");
-    link.id = id;
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap";
-    document.head.appendChild(link);
-  }, []);
-};
-
 const Contacts = () => {
-  useBrandFonts();
   const { user } = useCall();
   const [contacts, setContacts] = useState([]);
   const [blockedIds, setBlockedIds] = useState([]);
@@ -96,9 +82,7 @@ const Contacts = () => {
           : "This guest will be able to call you again.",
       icon: action === "block" ? "warning" : "question",
       showCancelButton: true,
-      background: "#101820",
-      color: "#f1ece2",
-      confirmButtonColor: action === "block" ? "#b8892b" : "#16a34a",
+      confirmButtonColor: action === "block" ? "#2563eb" : "#16a34a",
       cancelButtonColor: "#6b7280",
       confirmButtonText: action === "block" ? "Yes, Block" : "Yes, Unblock",
       cancelButtonText: "Cancel",
@@ -129,9 +113,7 @@ const Contacts = () => {
           title: action === "block" ? "Blocked!" : "Unblocked!",
           text: `${contact.gestName} has been ${action}ed successfully.`,
           icon: "success",
-          background: "#101820",
-          color: "#f1ece2",
-          confirmButtonColor: "#b8892b",
+          confirmButtonColor: "#2563eb",
           timer: 2000,
           showConfirmButton: false,
         });
@@ -141,9 +123,7 @@ const Contacts = () => {
         title: "Error",
         text: error.response?.data?.message || "Something went wrong",
         icon: "error",
-        background: "#101820",
-        color: "#f1ece2",
-        confirmButtonColor: "#b8892b",
+        confirmButtonColor: "#2563eb",
       });
     } finally {
       setActionLoading(null);
@@ -156,15 +136,15 @@ const Contacts = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
           <div className="relative">
-            <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-[#b8892b] to-[#8a651c] animate-pulse mb-4" />
+            <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-blue-600 to-teal-500 animate-pulse mb-4" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 border-4 border-[#b8892b]/20 border-t-[#c9a24b] rounded-full animate-spin" />
+              <div className="w-16 h-16 border-4 border-blue-200 border-t-teal-500 rounded-full animate-spin" />
             </div>
           </div>
-          <p className="text-[#f1ece2]/60 mt-4 font-medium">
+          <p className="text-gray-500 mt-4 font-medium">
             Loading contacts...
           </p>
         </div>
@@ -173,27 +153,20 @@ const Contacts = () => {
   }
 
   return (
-    <div
-      className="min-h-screen p-3 sm:p-4 md:p-6 lg:p-8"
-      style={{ fontFamily: "'Inter', ui-sans-serif, sans-serif" }}>
+    <div className="min-h-screen p-3 sm:p-4 md:p-6 lg:p-8 bg-white">
       {/* Header */}
       <div className="mb-6 sm:mb-8">
-        <h1
-          className="text-2xl sm:text-3xl lg:text-4xl text-[#f1ece2] mb-2"
-          style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontWeight: 600,
-          }}>
-          Guest <span className="text-[#c9a24b]">Contacts</span>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+          Guest <span className="bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">Contacts</span>
         </h1>
-        <p className="text-[#f1ece2]/45 text-sm sm:text-base">
+        <p className="text-gray-500 text-sm sm:text-base">
           Manage guests who have called you — block or unblock anytime
         </p>
       </div>
 
       {/* Stats — row design */}
-      <div className="rounded-2xl border border-[#b8892b]/20 bg-gradient-to-br from-[#16222f]/90 via-[#0e161e]/90 to-[#16222f]/90 shadow-xl overflow-hidden mb-6">
-        <div className="divide-y sm:divide-y-0 sm:divide-x divide-[#b8892b]/10 sm:flex">
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden mb-6">
+        <div className="divide-y sm:divide-y-0 sm:divide-x divide-gray-100 sm:flex">
           {[
             { label: "Total Contacts", value: contacts.length, icon: Users },
             {
@@ -206,12 +179,12 @@ const Contacts = () => {
             <div
               key={i}
               className="flex-1 flex items-center gap-3 px-4 sm:px-6 py-4">
-              <div className="w-10 h-10 rounded-lg bg-[#b8892b]/10 border border-[#b8892b]/20 flex items-center justify-center flex-shrink-0">
-                <stat.icon className="w-5 h-5 text-[#c9a24b]" />
+              <div className="w-10 h-10 rounded-lg bg-blue-50 border border-gray-200 flex items-center justify-center flex-shrink-0">
+                <stat.icon className="w-5 h-5 text-teal-600" />
               </div>
               <div>
-                <p className="text-xs text-[#f1ece2]/45">{stat.label}</p>
-                <p className="text-xl font-bold text-[#f1ece2]">
+                <p className="text-xs text-gray-500">{stat.label}</p>
+                <p className="text-xl font-bold text-gray-900">
                   {stat.value}
                 </p>
               </div>
@@ -221,31 +194,31 @@ const Contacts = () => {
       </div>
 
       {/* Main card */}
-      <div className="rounded-2xl border border-[#b8892b]/20 bg-gradient-to-br from-[#16222f]/90 via-[#0e161e]/90 to-[#16222f]/90 shadow-xl overflow-hidden">
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
         {/* Toolbar */}
-        <div className="p-4 sm:p-6 border-b border-[#b8892b]/15">
+        <div className="p-4 sm:p-6 border-b border-gray-200">
           <div className="flex flex-col sm:flex-row gap-3">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#f1ece2]/30" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search by name or phone..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full h-10 pl-9 pr-9 bg-[#0a0f15]/60 border border-[#b8892b]/20 rounded-lg text-sm text-[#f1ece2] placeholder:text-[#f1ece2]/30 focus:outline-none focus:border-[#c9a24b] focus:ring-2 focus:ring-[#c9a24b]/20 transition"
+                className="w-full h-10 pl-9 pr-9 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
               />
               {search && (
                 <button
                   onClick={() => setSearch("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#f1ece2]/30 hover:text-[#f1ece2]/60">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                   <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
 
             {/* Tabs */}
-            <div className="flex bg-[#0a0f15]/60 border border-[#b8892b]/15 rounded-lg p-1 gap-1 self-start">
+            <div className="flex bg-gray-50 border border-gray-200 rounded-lg p-1 gap-1 self-start">
               {[
                 { key: "all", label: "All" },
                 { key: "blocked", label: `Blocked (${blockedCount})` },
@@ -255,8 +228,8 @@ const Contacts = () => {
                   onClick={() => setTab(t.key)}
                   className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
                     tab === t.key
-                      ? "bg-gradient-to-r from-[#b8892b] to-[#8a651c] text-[#0a0f15]"
-                      : "text-[#f1ece2]/50 hover:text-[#f1ece2]/80"
+                      ? "bg-gradient-to-r from-blue-600 to-teal-500 text-white"
+                      : "text-gray-500 hover:text-gray-800"
                   }`}>
                   {t.label}
                 </button>
@@ -267,7 +240,7 @@ const Contacts = () => {
 
         {/* Contact list */}
         {filtered.length > 0 ? (
-          <div className="divide-y divide-[#b8892b]/10">
+          <div className="divide-y divide-gray-100">
             {filtered.map((contact, idx) => {
               const isBlocked = blockedIds.includes(String(contact.gestId));
               const isLoading = actionLoading === String(contact.gestId);
@@ -275,7 +248,7 @@ const Contacts = () => {
               return (
                 <div
                   key={idx}
-                  className={`flex items-center justify-between px-4 sm:px-6 py-4 hover:bg-[#b8892b]/5 transition-colors ${
+                  className={`flex items-center justify-between px-4 sm:px-6 py-4 hover:bg-blue-50/40 transition-colors ${
                     isBlocked ? "opacity-60" : ""
                   }`}>
                   {/* Avatar + info */}
@@ -283,24 +256,24 @@ const Contacts = () => {
                     <div
                       className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-base ${
                         isBlocked
-                          ? "bg-[#f1ece2]/5 text-[#f1ece2]/30"
-                          : "bg-gradient-to-br from-[#b8892b] to-[#8a651c] text-[#0a0f15]"
+                          ? "bg-gray-100 text-gray-400"
+                          : "bg-gradient-to-br from-blue-600 to-teal-500 text-white"
                       }`}>
                       {contact.gestName?.charAt(0)?.toUpperCase() || "G"}
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-sm font-semibold text-[#f1ece2] truncate">
+                        <p className="text-sm font-semibold text-gray-900 truncate">
                           {contact.gestName}
                         </p>
                         {isBlocked && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#b8892b]/10 text-[#c9a24b] rounded-full text-[11px] font-semibold">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-teal-600 rounded-full text-[11px] font-semibold">
                             <Ban className="w-2.5 h-2.5" />
                             Blocked
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-1 text-xs text-[#f1ece2]/40 mt-0.5">
+                      <div className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
                         <Phone className="w-3 h-3" />
                         {contact.gestPhone}
                       </div>
@@ -313,8 +286,8 @@ const Contacts = () => {
                     disabled={isLoading}
                     className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                       isBlocked
-                        ? "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20"
-                        : "bg-[#b8892b]/10 text-[#c9a24b] hover:bg-[#b8892b]/20 border border-[#b8892b]/20"
+                        ? "bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border border-emerald-200"
+                        : "bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200"
                     }`}>
                     {isLoading ? (
                       <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -331,17 +304,17 @@ const Contacts = () => {
           </div>
         ) : (
           <div className="text-center py-16">
-            <div className="w-16 h-16 mx-auto rounded-full bg-[#f1ece2]/5 flex items-center justify-center mb-4">
-              <User className="w-8 h-8 text-[#f1ece2]/25" />
+            <div className="w-16 h-16 mx-auto rounded-full bg-gray-100 flex items-center justify-center mb-4">
+              <User className="w-8 h-8 text-gray-300" />
             </div>
-            <h3 className="text-lg font-semibold text-[#f1ece2] mb-1">
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">
               {search
                 ? "No contacts found"
                 : tab === "blocked"
                   ? "No blocked contacts"
                   : "No contacts yet"}
             </h3>
-            <p className="text-sm text-[#f1ece2]/40 max-w-xs mx-auto">
+            <p className="text-sm text-gray-400 max-w-xs mx-auto">
               {search
                 ? "Try a different name or phone number"
                 : tab === "blocked"

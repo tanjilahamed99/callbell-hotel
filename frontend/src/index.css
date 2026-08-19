@@ -8,3 +8,21 @@ dialog {
 .swal2-container {
   z-index: 99999 !important;
 }
+
+:root {
+  --font-heading: "Cormorant Garamond", serif;
+  --font-body: "Montserrat", sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
