@@ -37,6 +37,7 @@ import Contacts from "./pages/Dashboard/Contacts";
 import RazorpayCheck from "./pages/Dashboard/RazorpayPaymentValidation";
 import AdminDepartments from "./pages/Admin/AdminDepartments";
 import NotFound from "./pages/NotFound";
+import QrCode from "./components/Dashboard/QrCode";
 
 function App() {
   return (
@@ -66,7 +67,6 @@ function App() {
           {/* <Route path="subscriptions" element={<Subscriptions />} /> */}
           {/* <Route path="razorpay" element={<RazorpayCheck />} /> */}
           {/* <Route path="transactions" element={<TransactionPage />} /> */}
-
         </Route>
 
         {/* admin */}
@@ -75,6 +75,7 @@ function App() {
           <Route path="users" element={<AllUsers />} />
           <Route path="settings" element={<Settings />} />
           <Route path="departments" element={<AdminDepartments />} />
+          <Route path="qr-code" element={<QrCode />} />
           {/* <Route path="subscriptions" element={<AdminSubscription />} /> */}
           {/* <Route path="transactions" element={<AdminTransaction />} /> */}
           {/* <Route path="about" element={<AdminAbout />} /> */}

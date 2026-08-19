@@ -12,6 +12,7 @@ import {
   Building2,
   LogOut,
   BellRing,
+  QrCode,
 } from "lucide-react";
 import { useCall } from "../../Provider/Provider";
 import { useEffect, useState } from "react";
@@ -44,6 +45,11 @@ const AdminDashboardLayout = () => {
     { href: "/admin/users", label: "All Users", icon: Users },
     { href: "/admin/departments", label: "Departments", icon: Building2 },
     { href: "/admin/settings", label: "Settings", icon: Settings },
+    {
+      href: "/admin/qr-code",
+      label: "QR Code",
+      icon: QrCode,
+    },
   ];
 
   const systemStats = [
@@ -133,9 +139,7 @@ const AdminDashboardLayout = () => {
                 </p>
                 <div className="flex items-center mt-1">
                   <div className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></div>
-                  <span className="text-xs text-gray-500">
-                    Administrator
-                  </span>
+                  <span className="text-xs text-gray-500">Administrator</span>
                 </div>
               </div>
             </div>
@@ -255,16 +259,14 @@ const AdminDashboardLayout = () => {
               <div className="flex flex-col md:flex-row justify-between items-center gap-3">
                 <div className="text-xs sm:text-sm text-gray-400 text-center md:text-left">
                   <p>
-                    © {new Date().getFullYear()} The Tarainn Admin Panel.
-                    All rights reserved.
+                    © {new Date().getFullYear()} The Tarainn Admin Panel. All
+                    rights reserved.
                   </p>
                 </div>
                 <div className="flex items-center flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
                   <span className="text-xs sm:text-sm text-gray-400">
                     System:{" "}
-                    <span className="font-medium text-emerald-600">
-                      Online
-                    </span>
+                    <span className="font-medium text-emerald-600">Online</span>
                   </span>
                   <span className="text-xs sm:text-sm text-gray-400">
                     Users:{" "}
