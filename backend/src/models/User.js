@@ -78,10 +78,10 @@ const userSchema = new mongoose.Schema({
   ],
   callHistory: [
     {
-      gestName: { type: String, required: true },
-      gestId: { type: String, required: true },
-      gestPhone: { type: String, required: true },
-      duration: { type: String, required: true },
+      gestName: { type: String },
+      room: { type: String },
+      gestId: { type: String },
+      duration: { type: String },
       time: { type: Date, default: Date.now },
     },
   ],

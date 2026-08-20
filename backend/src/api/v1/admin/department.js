@@ -65,6 +65,8 @@ exports.getAllDepartments = async (req, res) => {
   }
 };
 
+const bcrypt = require("bcrypt");
+
 exports.updateDepartment = async (req, res) => {
   try {
     const { id } = req.params;
@@ -86,7 +88,6 @@ exports.updateDepartment = async (req, res) => {
     }
 
     if (email !== undefined) {
-      // Check whether another user already uses this email
       const emailExists = await User.findOne({
         email,
         _id: { $ne: id },
@@ -106,9 +107,9 @@ exports.updateDepartment = async (req, res) => {
       existingUser.department = department;
     }
 
-    // Update password only if frontend sends it
+    // Hash password only when frontend sends a new password
     if (password !== undefined && password !== "") {
-      existingUser.password = password;
+      existingUser.password = await bcrypt.hash(password, 10);
     }
 
     const updatedUser = await existingUser.save();
@@ -119,6 +120,8 @@ exports.updateDepartment = async (req, res) => {
       user: updatedUser,
     });
   } catch (err) {
+    console.error("Update user error:", err);
+
     res.status(500).json({
       success: false,
       message: err.message,
@@ -187,9 +190,7 @@ exports.callHistory = async (req, res) => {
     });
 
     // Newest calls first
-    allCallHistory.sort(
-      (a, b) => new Date(b.time) - new Date(a.time)
-    );
+    allCallHistory.sort((a, b) => new Date(b.time) - new Date(a.time));
 
     res.status(200).json({
       success: true,
