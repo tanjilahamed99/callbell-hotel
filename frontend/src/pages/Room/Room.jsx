@@ -97,7 +97,7 @@ export default function RoomPage() {
             </div>
             <div>
               <h2 className="font-bold text-gray-900 text-base leading-tight">
-                The
+                The <span> </span>
                 <span className="bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
                   Tarainn
                 </span>
