@@ -129,8 +129,18 @@ exports.updateDepartment = async (req, res) => {
 exports.deleteDepartment = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
-    await User.findOneAndDelete(id);
+
+    const response = await User.findOneAndDelete({
+      _id: id,
+    });
+
+    if (!response) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+
     res.status(200).json({
       success: true,
       message: "User deleted successfully!",

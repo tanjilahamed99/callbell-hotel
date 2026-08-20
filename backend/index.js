@@ -61,7 +61,7 @@ app.use(
     origin: [
       process.env.FRONTEND_URL,
       process.env.FRONTEND_URL_2,
-      "https://callbell-hotel.vercel.app",
+      "https://callball-hotel.vercel.app",
     ],
     credentials: true,
   }),
@@ -82,6 +82,7 @@ let userSockets = []; // Move outside, so it's shared across all connections
 io.on("connection", (socket) => {
   socket.on("register", (userId) => {
     // Remove any previous socket entry for this user
+
     userSockets = userSockets.filter((user) => user.id !== userId);
     // Add new socket
     userSockets.push({ id: userId, socketId: socket.id });
@@ -92,14 +93,17 @@ io.on("connection", (socket) => {
     );
     // **Send the socket ID back to the WebView**
     socket.emit("registered", { userId, socketId: socket.id });
+
+    // console.log(userSockets);
   });
 
   // Guest calls registered user
   socket.on(
     "guest-call",
-    async ({ from, to, roomName, fcmToken, gestId, room }) => {
+    async ({ from, to, roomName, fcmToken = "", gestId, room }) => {
       const target = userSockets.find((entry) => entry.id === to);
       // 1. Notify via Socket (Foreground)
+
       if (target) {
         io.to(target.socketId).emit("incoming-call", {
           from: {

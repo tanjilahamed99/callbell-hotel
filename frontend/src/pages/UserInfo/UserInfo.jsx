@@ -38,6 +38,8 @@ const UserInfo = () => {
   const [showUser, setShowUser] = useState(false);
   const gest = JSON.parse(localStorage.getItem("guest"));
 
+  console.log(activeCall);
+
   useEffect(() => {
     if (gest) {
       setShowUser(true);

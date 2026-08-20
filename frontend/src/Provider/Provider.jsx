@@ -29,6 +29,8 @@ export const Provider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [myInfo, setMyInfo] = useState(null);
   const [isRoomClosed, setIsRoomClosed] = useState(false);
+  const guest = JSON.parse(localStorage.getItem("guest"));
+
 
   const logout = async () => {
     await updateUser({ id: myInfo.id, data: { busy: false } });
@@ -112,7 +114,7 @@ export const Provider = ({ children }) => {
       socket.emit("register", user.id);
     }
     if (!user) {
-      socket.emit("register", localStorage.getItem("guestName"));
+      socket.emit("register", guest.id);
     }
     socket.on("registered", ({ userId, socketId }) => {
       // Send socket ID to Android native
@@ -121,6 +123,7 @@ export const Provider = ({ children }) => {
       }
     });
     socket.on("incoming-call", ({ from, roomName, room }) => {
+      console.log("call coming");
       setIncomingCall({ from, roomName, room });
       setModalOpen(true);
     });

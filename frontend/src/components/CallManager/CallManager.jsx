@@ -20,6 +20,8 @@ export default function CallManager({
   const gestId = guest.id;
   const gestRoom = guest.room;
 
+  console.log(userId);
+
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -128,6 +128,7 @@ const AdminDepartments = () => {
           email: form.email,
           department: form.department,
         };
+
         if (form.password.trim()) payload.password = form.password;
 
         const { data } = await updateDepartmentUser(editingId, payload);
@@ -138,6 +139,7 @@ const AdminDepartments = () => {
           adminId: user?.id,
           adminEmail: user?.email,
         });
+        console.log("editing phrase");
         if (!data.success) throw new Error(data.message || "Create failed");
       }
 
@@ -185,7 +187,9 @@ const AdminDepartments = () => {
 
     try {
       const { data } = await deleteDepartmentUser(dept._id);
+
       if (!data.success) throw new Error(data.message || "Delete failed");
+
       setDepartments((prev) => prev.filter((d) => d._id !== dept._id));
     } catch (err) {
       Swal.fire({
