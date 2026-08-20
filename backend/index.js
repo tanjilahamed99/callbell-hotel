@@ -58,7 +58,11 @@ require("dotenv").config();
 const app = express();
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, process.env.FRONTEND_URL_2],
+    origin: [
+      process.env.FRONTEND_URL,
+      process.env.FRONTEND_URL_2,
+      "https://callbell-hotel.vercel.app",
+    ],
     credentials: true,
   }),
 );
@@ -127,7 +131,7 @@ io.on("connection", (socket) => {
         sender: String("Caller"),
         uuid: Date.now().toString(),
         avatar: "",
-        room:String(room)
+        room: String(room),
       };
 
       try {
