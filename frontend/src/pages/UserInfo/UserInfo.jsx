@@ -144,7 +144,7 @@ const UserInfo = () => {
                       <CallManager
                         userId={activeCall._id}
                         userName={activeCall.name}
-                        isBusy={activeCall.isBusy}
+                        isBusy={activeCall.busy}
                         setActiveCall={setActiveCall}
                       />
                     </div>

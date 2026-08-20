@@ -85,7 +85,6 @@ const userSchema = new mongoose.Schema({
       time: { type: Date, default: Date.now },
     },
   ],
-
   department: {
     type: String,
     enum: [
