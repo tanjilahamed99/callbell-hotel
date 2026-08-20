@@ -112,7 +112,7 @@ export const Provider = ({ children }) => {
     if (user) {
       socket.emit("register", user.id);
     }
-    if (!user) {
+    if (guest) {
       socket.emit("register", guest?.id);
     }
     socket.on("registered", ({ userId, socketId }) => {
