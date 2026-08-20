@@ -31,7 +31,6 @@ export const Provider = ({ children }) => {
   const [isRoomClosed, setIsRoomClosed] = useState(false);
   const guest = JSON.parse(localStorage.getItem("guest"));
 
-
   const logout = async () => {
     await updateUser({ id: myInfo.id, data: { busy: false } });
     localStorage.removeItem("token");
@@ -114,7 +113,7 @@ export const Provider = ({ children }) => {
       socket.emit("register", user.id);
     }
     if (!user) {
-      socket.emit("register", guest.id);
+      socket.emit("register", guest?.id);
     }
     socket.on("registered", ({ userId, socketId }) => {
       // Send socket ID to Android native
