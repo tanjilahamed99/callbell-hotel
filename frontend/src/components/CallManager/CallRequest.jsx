@@ -135,7 +135,7 @@ const CallRequest = ({ handleCloseCall, userName, waitingCall }) => {
               <div className="h-2 w-2 animate-pulse rounded-full bg-teal-500" />
 
               <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-600">
-                Incoming Call
+                Out-going Call
               </span>
             </div>
 
