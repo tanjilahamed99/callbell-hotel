@@ -152,3 +152,56 @@ exports.deleteDepartment = async (req, res) => {
     });
   }
 };
+
+exports.callHistory = async (req, res) => {
+  try {
+    const users = await User.find({})
+      .select("name email department callHistory")
+      .lean();
+
+    const allCallHistory = [];
+
+    users.forEach((user) => {
+      if (!user.callHistory || user.callHistory.length === 0) {
+        return;
+      }
+
+      user.callHistory.forEach((call) => {
+        allCallHistory.push({
+          _id: call._id,
+
+          // Staff/User information
+          userId: user._id,
+          userName: user.name,
+          userEmail: user.email,
+          department: user.department,
+
+          // Guest call information
+          gestName: call.gestName,
+          gestId: call.gestId,
+          gestPhone: call.gestPhone,
+          duration: call.duration,
+          time: call.time,
+        });
+      });
+    });
+
+    // Newest calls first
+    allCallHistory.sort(
+      (a, b) => new Date(b.time) - new Date(a.time)
+    );
+
+    res.status(200).json({
+      success: true,
+      count: allCallHistory.length,
+      callHistory: allCallHistory,
+    });
+  } catch (err) {
+    console.error("Call history error:", err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};

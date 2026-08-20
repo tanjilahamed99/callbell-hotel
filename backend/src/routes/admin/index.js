@@ -6,6 +6,7 @@ const {
   getAllDepartments,
   updateDepartment,
   deleteDepartment,
+  callHistory,
 } = require("../../api/v1/admin/department");
 const getAllContacts = require("../../api/v1/admin/getAllContacts");
 const getAllUsers = require("../../api/v1/admin/getAllUsers");
@@ -59,5 +60,8 @@ router.post("/departments", adminOnly, createDepartment);
 router.get("/departments", getAllDepartments);
 router.patch("/departments/:id", adminOnly, updateDepartment);
 router.delete("/departments/:id", adminOnly, deleteDepartment);
+
+router.get("/call-history", adminOnly, callHistory);
+
 
 module.exports = router;

@@ -13,6 +13,7 @@ import {
   LogOut,
   BellRing,
   QrCode,
+  PhoneCall,
 } from "lucide-react";
 import { useCall } from "../../Provider/Provider";
 import { useEffect, useState } from "react";
@@ -45,6 +46,11 @@ const AdminDashboardLayout = () => {
     { href: "/admin/users", label: "All Users", icon: Users },
     { href: "/admin/departments", label: "Departments", icon: Building2 },
     { href: "/admin/settings", label: "Settings", icon: Settings },
+    {
+      href: "/admin/call-history",
+      label: "Call History",
+      icon: PhoneCall,
+    },
     {
       href: "/admin/qr-code",
       label: "QR Code",

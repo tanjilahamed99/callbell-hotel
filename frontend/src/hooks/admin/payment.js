@@ -21,3 +21,7 @@ export const deleteDepartmentUser = async (id) => {
 export const updateDepartmentUser = async (id, payload) => {
   return axios.patch(`${BASE_URL}/admin/departments/${id}`, payload);
 };
+
+export const getCallHistory = async () => {
+  return axios.get(`${BASE_URL}/admin/call-history`);
+};

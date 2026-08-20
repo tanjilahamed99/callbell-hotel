@@ -41,8 +41,6 @@ export default function CallPopup() {
   const [timerActive, setTimerActive] = useState(false);
   const audioRef = useRef(null);
 
-  console.log(incomingCall);
-
   // Enable sound on first user interaction
   useEffect(() => {
     const enableSound = () => setCanPlaySound(true);

@@ -32,12 +32,12 @@ import DistributorAllUsers from "./pages/Distributor/DistributorAllUsers";
 import DistributorDashboard from "./pages/Distributor/DistributorDashboard";
 import PaymentSuccess from "./pages/Distributor/PaymentSuccess";
 import PaymentFailed from "./pages/Distributor/PaymentFailed";
-import CallHistory from "./pages/Dashboard/CallHistory";
 import Contacts from "./pages/Dashboard/Contacts";
 import RazorpayCheck from "./pages/Dashboard/RazorpayPaymentValidation";
 import AdminDepartments from "./pages/Admin/AdminDepartments";
 import NotFound from "./pages/NotFound";
 import QrCode from "./components/Dashboard/QrCode";
+import CallHistory from "./pages/Admin/CallHistory";
 
 function App() {
   return (
@@ -76,6 +76,7 @@ function App() {
           <Route path="settings" element={<Settings />} />
           <Route path="departments" element={<AdminDepartments />} />
           <Route path="qr-code" element={<QrCode />} />
+          <Route path="call-history" element={<CallHistory />} />
           {/* <Route path="subscriptions" element={<AdminSubscription />} /> */}
           {/* <Route path="transactions" element={<AdminTransaction />} /> */}
           {/* <Route path="about" element={<AdminAbout />} /> */}
